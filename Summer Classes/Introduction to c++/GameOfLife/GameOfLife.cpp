@@ -25,6 +25,23 @@ void updateGridState(Grid& G);
 
 int countAlives(const Grid& G, int i, int j);
 
+void clear() {
+	COORD topLeft = { 0, 0 };
+	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO screen;
+	DWORD written;
+
+	//GetConsoleScreenBufferInfo(console, &screen);
+	//FillConsoleOutputCharacterA(
+	//	console, ' ', screen.dwSize.X * screen.dwSize.Y, topLeft, &written
+	//);
+	//FillConsoleOutputAttribute(
+	//	console, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE,
+	//	screen.dwSize.X * screen.dwSize.Y, topLeft, &written
+	//);
+	SetConsoleCursorPosition(console, topLeft);
+}
+
 
 int main(int argc, char argv[]) {
 
@@ -40,7 +57,7 @@ int main(int argc, char argv[]) {
 	while (G.gen++ < 100) {
 		printGrid(G);
 		updateGridState(G);
-		Sleep(50);
+		Sleep(100);
 	}
 	
 
@@ -49,7 +66,8 @@ int main(int argc, char argv[]) {
 
 void printGrid(const Grid& G)
 {
-	system("CLS");
+	clear();
+	//system("CLS");
 	int w = 2;
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	for (int i = 0; i < G.size; ++i) {

@@ -2,6 +2,8 @@
 #include <iostream>
 #include <iomanip>
 #include <Windows.h>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -23,6 +25,8 @@ Grid initEmptyGrid(int size);
 
 void randomizeStates(Grid& G, double p = 0.1);
 
+void setPattern(Grid& G, string File);
+
 Grid copyGrid(const Grid& G);
 
 void deleteGrid(Grid& G);
@@ -39,7 +43,9 @@ int main(int argc, char argv[]) {
 
 	Grid G = initEmptyGrid(50);
 
-	randomizeStates(G, 0.5);
+	//randomizeStates(G, 0.5);
+	setPattern(G, "../Patterns/diehard.pgol");
+	printGrid(G);
 
 	//G.states[1][1] = State::ALIVE;
 	//G.states[1][3] = State::ALIVE;
@@ -133,7 +139,7 @@ Grid initEmptyGrid(int size)
 
 void randomizeStates(Grid& G, double p)
 {
-	srand(time(0));
+	srand((unsigned int)time(0));
 	for (int i = 0; i < G.size; ++i) {
 		for (int j = 0; j < G.size; ++j) {
 			double r = rand() % 1001 / 1000.0;
@@ -141,6 +147,35 @@ void randomizeStates(Grid& G, double p)
 			else G.states[i][j] = State::DEAD;
 		}
 	}
+}
+
+void setPattern(Grid& G, string File)
+{
+	ifstream input(File.c_str());
+	if (!input.is_open()) {
+		cout << File << " not found!" << endl;
+		return;
+	}
+
+	streampos pos = input.tellg();
+	int x_dim = 0;
+	while (input.get() != '\n') x_dim++;
+
+	input.seekg(pos);
+	int y_dim = 0;
+	string line;
+	while (getline(input, line)) y_dim++;
+
+	input.clear();
+	input.seekg(pos);
+	int x = (int)floor((G.size - x_dim) / 2.0);
+	int y = (int)floor((G.size - y_dim) / 2.0);
+
+	for (int i = 0; i < y_dim; ++i) for (int j = 0; j < x_dim+1; ++j) {
+		char c = input.get();
+		if (c == '*' || c == 'X') G.states[y + i][x + j] = State::ALIVE;
+	}
+		
 }
 
 Grid copyGrid(const Grid& G)

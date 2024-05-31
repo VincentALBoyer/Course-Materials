@@ -5,6 +5,12 @@
 
 using namespace std;
 
+constexpr int BLACK_COLOR = 0;
+constexpr int BLUE_COLOR = 9;
+constexpr int GREEN_COLOR = 10;
+constexpr int RED_COLOR = 12;
+constexpr int WHITE_COLOR = 15;
+
 enum State{ALIVE, DEAD};
 
 struct Grid {
@@ -45,7 +51,7 @@ int main(int argc, char argv[]) {
 	while (G.gen++ < 500) {
 		printGrid(G);
 		updateGridState(G);
-		Sleep(10);
+		Sleep(100);
 	}
 	
 
@@ -61,16 +67,25 @@ void printGrid(const Grid& G)
 	for (int i = 0; i < G.size; ++i) {
 		for (int j = 0; j < G.size; ++j) {
 			if (G.states[i][j] == State::DEAD) 
-				SetConsoleTextAttribute(handle, 15);
+				SetConsoleTextAttribute(handle, BLACK_COLOR);
 			else 
-				SetConsoleTextAttribute(handle, 10);
+				SetConsoleTextAttribute(handle, BLUE_COLOR);
 			
 			cout << setw(w) << (char)254u;
 		}
 		cout << endl;
 	}
-	SetConsoleTextAttribute(handle, 15);
-	cout << "Gen: " << G.gen << endl;
+	SetConsoleTextAttribute(handle, WHITE_COLOR);
+
+	//Counting the number of alive cells
+	int n = 0;
+	for (int i = 0; i < G.size; ++i)
+		for (int j = 0; j < G.size; ++j) n += (G.states[i][j] == State::ALIVE);
+
+
+	int W = 10;
+	cout << setw(W) << "Gen: " << setw(W) << G.gen << endl;
+	cout << setw(W) << "Alive: " << setw(W) << n << endl;
 
 }
 

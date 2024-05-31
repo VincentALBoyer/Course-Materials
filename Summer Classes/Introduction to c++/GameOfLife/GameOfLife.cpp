@@ -54,6 +54,7 @@ int main(int argc, char argv[]) {
 		Sleep(100);
 	}
 	
+	deleteGrid(G);
 
 	return 0;
 }
@@ -69,7 +70,7 @@ void printGrid(const Grid& G)
 			if (G.states[i][j] == State::DEAD) 
 				SetConsoleTextAttribute(handle, BLACK_COLOR);
 			else 
-				SetConsoleTextAttribute(handle, BLUE_COLOR);
+				SetConsoleTextAttribute(handle, RED_COLOR);
 			
 			cout << setw(w) << (char)254u;
 		}

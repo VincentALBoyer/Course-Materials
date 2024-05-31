@@ -44,15 +44,8 @@ int main(int argc, char argv[]) {
 	Grid G = initEmptyGrid(50);
 
 	//randomizeStates(G, 0.5);
-	setPattern(G, "../Patterns/diehard.pgol");
+	setPattern(G, "../Patterns/x66.pgol");
 	printGrid(G);
-
-	//G.states[1][1] = State::ALIVE;
-	//G.states[1][3] = State::ALIVE;
-	//G.states[2][2] = State::ALIVE;
-	//G.states[2][3] = State::ALIVE;
-	//G.states[3][2] = State::ALIVE;
-
 
 	while (G.gen++ < 500) {
 		printGrid(G);

@@ -15,9 +15,13 @@ struct Grid {
 
 Grid initEmptyGrid(int size);
 
+void randomizeStates(Grid& G, double p = 0.1);
+
 Grid copyGrid(const Grid& G);
 
 void deleteGrid(Grid& G);
+
+void resetCursorPosition();
 
 void printGrid(const Grid& G);
 
@@ -25,39 +29,23 @@ void updateGridState(Grid& G);
 
 int countAlives(const Grid& G, int i, int j);
 
-void clear() {
-	COORD topLeft = { 0, 0 };
-	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_SCREEN_BUFFER_INFO screen;
-	DWORD written;
-
-	//GetConsoleScreenBufferInfo(console, &screen);
-	//FillConsoleOutputCharacterA(
-	//	console, ' ', screen.dwSize.X * screen.dwSize.Y, topLeft, &written
-	//);
-	//FillConsoleOutputAttribute(
-	//	console, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE,
-	//	screen.dwSize.X * screen.dwSize.Y, topLeft, &written
-	//);
-	SetConsoleCursorPosition(console, topLeft);
-}
-
-
 int main(int argc, char argv[]) {
 
-	Grid G = initEmptyGrid(20);
+	Grid G = initEmptyGrid(50);
 
-	G.states[1][1] = State::ALIVE;
-	G.states[1][3] = State::ALIVE;
-	G.states[2][2] = State::ALIVE;
-	G.states[2][3] = State::ALIVE;
-	G.states[3][2] = State::ALIVE;
+	randomizeStates(G, 0.5);
+
+	//G.states[1][1] = State::ALIVE;
+	//G.states[1][3] = State::ALIVE;
+	//G.states[2][2] = State::ALIVE;
+	//G.states[2][3] = State::ALIVE;
+	//G.states[3][2] = State::ALIVE;
 
 
-	while (G.gen++ < 100) {
+	while (G.gen++ < 500) {
 		printGrid(G);
 		updateGridState(G);
-		Sleep(100);
+		Sleep(10);
 	}
 	
 
@@ -66,7 +54,7 @@ int main(int argc, char argv[]) {
 
 void printGrid(const Grid& G)
 {
-	clear();
+	resetCursorPosition();
 	//system("CLS");
 	int w = 2;
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -127,11 +115,23 @@ Grid initEmptyGrid(int size)
 	return G;
 }
 
+void randomizeStates(Grid& G, double p)
+{
+	srand(time(0));
+	for (int i = 0; i < G.size; ++i) {
+		for (int j = 0; j < G.size; ++j) {
+			double r = rand() % 1001 / 1000.0;
+			if (r < p) G.states[i][j] = State::ALIVE;
+			else G.states[i][j] = State::DEAD;
+		}
+	}
+}
+
 Grid copyGrid(const Grid& G)
 {
 	Grid H = initEmptyGrid(G.size);
 	for (int i = 0; i < G.size; ++i) {
-		for (int j = 0; j < G.size; ++j) H.states[i][j]= G.states[i][j];
+		for (int j = 0; j < G.size; ++j) H.states[i][j] = G.states[i][j];
 	}
 	return H;
 }
@@ -140,4 +140,21 @@ void deleteGrid(Grid& G)
 {
 	for (int i = 0; i < G.size; ++i) delete[] G.states[i];
 	delete[] G.states;
+}
+
+void resetCursorPosition() {
+	COORD topLeft = { 0, 0 };
+	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+	//CONSOLE_SCREEN_BUFFER_INFO screen;
+	//DWORD written;
+
+	//GetConsoleScreenBufferInfo(console, &screen);
+	//FillConsoleOutputCharacterA(
+	//	console, ' ', screen.dwSize.X * screen.dwSize.Y, topLeft, &written
+	//);
+	//FillConsoleOutputAttribute(
+	//	console, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE,
+	//	screen.dwSize.X * screen.dwSize.Y, topLeft, &written
+	//);
+	SetConsoleCursorPosition(console, topLeft);
 }

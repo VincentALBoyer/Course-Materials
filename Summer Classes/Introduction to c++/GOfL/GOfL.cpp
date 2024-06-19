@@ -22,6 +22,8 @@ void deleteGrid(Grid& G);
 
 void randomizeStates(Grid& G, double p=0.25);
 
+int countAlives(const Grid& G, int i, int j);
+
 int main()
 {
     int size = 10;
@@ -31,6 +33,8 @@ int main()
     randomizeStates(G, 0.8);
 
     printGrid(G);
+
+    cout << "# ALIVE: " << countAlives(G, 1, 0);
 
     deleteGrid(G);
 
@@ -84,6 +88,21 @@ void randomizeStates(Grid& G, double p)
             else G.states[i][j] = State::DEAD;
         }
     }
+}
+
+int countAlives(const Grid& G, int i, int j)
+{
+    int nalives = 0;
+
+    for (int k = -1; k <= 1; k++) {
+        for (int l = -1; l <= 1; l++) if(k!=0 || l!=0){
+            int x = (k + i + G.size) % G.size;
+            int y = (l + j + G.size) % G.size;
+            if (G.states[x][y] == ALIVE) nalives++;
+        }
+    }
+
+    return nalives;
 }
 
 

@@ -11,7 +11,7 @@ bool** initGrid(int n);
 
 void printGrid(bool** G, int n);
 
-void deleteGrid(bool** G, int n);
+void deleteGrid(bool** G, int n); 
 
 int main()
 {

@@ -4,6 +4,9 @@
 #include <iostream>
 #include <time.h> 
 #include <iomanip>
+#include <windows.h>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -22,19 +25,38 @@ void deleteGrid(Grid& G);
 
 void randomizeStates(Grid& G, double p=0.25);
 
+void setPattern(Grid& G, string File);
+
 int countAlives(const Grid& G, int i, int j);
+
+void upgradeGridState(Grid& G);
+
+Grid copyGrid(const Grid& G);
 
 int main()
 {
-    int size = 10;
+    int size = 50;
+    int ngen = 500;
 
     Grid G = initEmptyGrid(size);
 
-    randomizeStates(G, 0.8);
+    //randomizeStates(G, 0.5);
+
+    setPattern(G, "D:/GitHub/Course-Materials/Summer Classes/Introduction to c++/Patterns/fun.pgol");
 
     printGrid(G);
 
-    cout << "# ALIVE: " << countAlives(G, 1, 0);
+    for (int i = 0; i < ngen; i++) {
+        //Print Grid
+        printGrid(G);
+
+        //Update Grid State
+        upgradeGridState(G);
+
+        //Wait 
+        Sleep(100);
+    }
+    
 
     deleteGrid(G);
 
@@ -59,16 +81,22 @@ Grid initEmptyGrid(int n)
 
 void printGrid(const Grid& G)
 {
+    COORD topLeft = { 0,0 };
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleCursorPosition(console, topLeft);
+    
+    SetConsoleTextAttribute(console, 12);
     int w = 5;
     for (int i = 0; i < G.size; i++) {
         for (int j = 0; j < G.size; j++) {
             if (G.states[i][j] == State::ALIVE)
                 cout << setw(2) << (char)254u;
-            else cout << setw(2) << '_';
+            else cout << setw(2) << ' ';
         }
 
         cout << endl;
     }
+    SetConsoleTextAttribute(console, 15);
 }
 
 void deleteGrid(Grid& G)
@@ -90,6 +118,49 @@ void randomizeStates(Grid& G, double p)
     }
 }
 
+void setPattern(Grid& G, string File)
+{
+    ifstream input(File.c_str());
+
+    if (!input.is_open()) {
+        cout << "File " << File << " not found!" << endl;
+        exit(25);
+    }
+
+    streampos pos = input.tellg();
+
+    int col_dim = 0; //for index j
+    while (input.get() != '\n') col_dim++;
+
+    input.seekg(pos);
+
+    int row_dim = 0;
+    string line;
+    while (getline(input, line)) 
+        row_dim++;
+
+    input.clear();
+    input.seekg(pos);
+
+    int x = (int)floor(G.size / 2.0 - col_dim/2.0);
+    int y = (int)floor(G.size / 2.0 - row_dim/2.0);
+
+    for (int i = 0; i < row_dim; i++) {
+        for (int j = 0; j < col_dim+1; j++) {
+            char c = input.get();
+            if (c == '*' || c == 'X')
+                G.states[x + i][y + j] = ALIVE;
+            //cout << c;
+        }
+        //cout << endl;
+    }
+    //cout << endl;
+    
+
+       
+
+}
+
 int countAlives(const Grid& G, int i, int j)
 {
     int nalives = 0;
@@ -103,6 +174,35 @@ int countAlives(const Grid& G, int i, int j)
     }
 
     return nalives;
+}
+
+void upgradeGridState(Grid& G)
+{
+    Grid tempG = copyGrid(G);
+    for (int i = 0; i < G.size; i++)  for (int j = 0; j < G.size; j++) {
+        int n = countAlives(tempG, i, j);
+        if (tempG.states[i][j] == ALIVE && (n == 2 || n == 3)) 
+            G.states[i][j] = ALIVE;
+        else if (tempG.states[i][j] == DEAD && n == 3) 
+            G.states[i][j] = ALIVE;
+        else 
+            G.states[i][j] = DEAD;
+    }
+    
+    deleteGrid(tempG);
+}
+
+Grid copyGrid(const Grid& G)
+{
+    Grid H = initEmptyGrid(G.size);
+    for (int i = 0; i < G.size; i++) {
+        for (int j = 0; j < G.size; j++) {
+            H.states[i][j] = G.states[i][j];
+        }
+    }
+
+
+    return H;
 }
 
 

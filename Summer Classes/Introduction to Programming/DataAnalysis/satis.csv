@@ -1,0 +1,59 @@
+Age,Gender,Ocupation,Monthly income,Price,Quality,Quantity,Availability,Taste,Flavours,Customer relation,Customer services,Texture,Size,Overal satisfaction,Consistency,Factor,Frowned,reason,Popular,My favorite,Kind,Preference,Recommend
+33,Male,Research,">40, 000",5,5,5,4,4,5,4,4,4,4,4,4,Taste,No,,Combo_VLM,Chocolate,More than one flavoured,agree,agree
+39,Male,student,"<10,000",3,5,3,4,5,5,4,4,5,2,4,4,Taste,No,Quantity issues,Combo_VCS,Chocolate,More than one flavoured,neutral,neutral
+40,Female,Teaching,">40, 000",3,4,4,4,3,4,4,4,4,4,4,4,Taste,No,,Combo_VCS,Caramel,More than one flavoured,disagree,neutral
+27,Male,Student,"<10,000",5,5,3,4,5,5,4,4,3,4,4,4,Taste,No,,Combo_VCS,Strawbery,More than one flavoured,agree,agree
+23,Female,Tutor,"10,000 - 20,000",5,5,4,4,5,5,4,5,5,5,5,5,Quality,No,,Combo_VCS,Vanila,single flavoured,agree,Strongly agree
+27,Female,Student,"<10,000",3,3,3,3,3,3,5,4,3,4,3,4,Taste,No,.no,Combo_CRC,Chocolate,single flavoured,neutral,agree
+48,Female,House wife,"<10,000",4,4,4,4,4,4,4,4,5,4,4,4,Taste,No,Texture defect,Combo_VCS,Vanila,single flavoured,neutral,agree
+15,Female,Student,"<10,000",3,4,4,4,5,5,5,4,5,4,5,5,Taste,No,,Combo_CRC,Caramel,More than one flavoured,agree,agree
+28,Female,Student,"10,000 - 20,000",3,3,3,4,4,3,4,3,3,3,3,4,Quality,No,Quality issues,Combo_VCS,Chocolate,More than one flavoured,neutral,agree
+24,Male,Engineer,"<10,000",3,5,4,5,5,5,5,5,5,5,4,5,Quality,No,,Combo_VCS,Chocolate,single flavoured,agree,agree
+22,Male,Student,"<10,000",2,4,3,3,4,3,3,4,4,3,4,3,Taste,Yes,Quality issues,Combo_VCS,Vanila,single flavoured,agree,agree
+21,Male,Student,"<10,000",2,4,4,3,5,4,4,4,5,4,4,4,Taste,No,,Combo_VCS,Chocolate,More than one flavoured,neutral,neutral
+29,Male,Prosthetist and Orthotist,"20,000 - 30,000",5,4,4,5,4,5,4,4,4,4,4,4,Taste,No,Body Defect,Combo_VCS,Chocolate,single flavoured,neutral,agree
+30,Male,Student,"10,000 - 20,000",3,5,4,4,5,5,5,5,5,3,4,3,Quality,Yes,Body Defect,Combo_VCS,Strawbery,More than one flavoured,agree,agree
+31,Female,Advocate,"<10,000",4,4,4,4,4,4,4,4,4,4,4,4,Quality,No,Texture defect,Combo_CRC,Strawbery,single flavoured,agree,agree
+32,Female,Student,"<10,000",4,4,3,4,4,4,4,4,4,4,4,4,Taste,No,,Combo_VCS,"
+Butterscotch",single flavoured,neutral,agree
+20,Female,Student,"<10,000",4,4,5,5,5,5,5,5,5,4,5,5,Quality,Yes,Quality issues,Combo_VCS,Vanila,More than one flavoured,agree,agree
+22,Female,Student,"<10,000",3,4,4,4,4,3,3,3,4,3,4,3,Taste,No,No,Combo_VCS,Chocolate,single flavoured,neutral,neutral
+23,Male,Farmer,"<10,000",3,5,4,4,5,5,5,5,5,5,4,5,Quality,Yes,Quality issues,Combo_VLM,Chocolate,More than one flavoured,Strongly agree,Strongly agree
+37,Female,House wife,"<10,000",3,3,4,3,4,3,4,3,3,2,2,3,Quality,Yes,Quality issues,Combo_VLM,Vanila,More than one flavoured,Strongly agree,agree
+17,Female,Student,"30,000 - 40,000",3,3,3,5,4,4,3,3,3,2,3,3,Taste,No,,Combo_VCS,Chocolate,single flavoured,neutral,neutral
+18,Male,Director,">40, 000",5,4,4,5,4,5,4,4,4,3,5,5,Quantity,No,Quality issues,Combo_VLM,Caramel,single flavoured,Strongly agree,Strongly agree
+15,Female,Studying,"<10,000",3,4,4,4,4,3,4,4,3,3,3,3,Quality,No,Quality issues,Combo_VCS,Chocolate,single flavoured,neutral,neutral
+28,Female,Journalist,"10,000 - 20,000",4,4,4,4,4,4,4,4,4,4,4,4,Taste,No,,Combo_VCS,Vanila,More than one flavoured,neutral,agree
+28,Male,Student,"<10,000",3,4,3,5,3,4,3,2,3,3,3,4,Quality,No,Quantity issues,Combo_VCS,Chocolate,single flavoured,neutral,neutral
+29,Male,Student,"10,000 - 20,000",5,2,4,4,3,3,4,3,5,3,4,4,Quality,Yes,,Combo_CRC,"
+Butterscotch",single flavoured,disagree,Strongly agree
+25,Female,Student,"<10,000",4,5,4,5,5,5,4,5,5,5,5,5,Taste,No,,Combo_VCS,Chocolate,single flavoured,neutral,neutral
+19,Male,Student,"<10,000",2,5,5,4,5,4,4,5,5,4,5,5,Taste,No,Quantity issues,Combo_VCS,Caramel,More than one flavoured,agree,Strongly agree
+19,Male,Student,">40, 000",3,3,5,3,5,2,4,3,5,4,4,4,Taste,No,Body Defect,Combo_VCS,Caramel,single flavoured,Strongly agree,neutral
+24,Male,bank,"20,000 - 30,000",5,5,5,4,5,4,5,5,5,5,5,5,Quality,No,,Combo_VCS,Vanila,More than one flavoured,agree,Strongly agree
+37,Female,Sales Executive,"10,000 - 20,000",3,5,4,5,5,5,4,4,4,4,5,4,Taste,No,Quantity issues,Combo_VCS,Vanila,single flavoured,agree,Strongly agree
+18,Male,Student,"<10,000",2,5,2,3,5,5,4,4,4,2,3,4,Taste,No,Quantity issues,Combo_VCS,Chocolate,single flavoured,neutral,agree
+18,Female,Students,"<10,000",3,5,3,4,5,4,3,3,4,4,5,5,Taste,No,Quantity issues,Combo_VCS,Chocolate,More than one flavoured,agree,agree
+28,Female,Student,"10,000 - 20,000",5,5,4,5,5,4,4,5,5,4,5,5,Quality,No,,Combo_VCS,Chocolate,single flavoured,neutral,agree
+25,Male,Student,"<10,000",3,5,5,5,3,5,3,5,5,5,3,5,Quality,Yes,Body Defect,Combo_VCS,Caramel,single flavoured,Strongly agree,Strongly agree
+29,Female,Doctor,"<10,000",4,4,4,3,5,5,4,4,4,4,4,4,Taste,No,,Combo_VCS,Vanila,single flavoured,agree,agree
+30,Male,Field work,"10,000 - 20,000",3,5,5,4,3,4,3,4,3,3,4,3,Not intrest,No,Quantity issues,Combo_VCS,Chocolate,More than one flavoured,agree,neutral
+30,Female,Teacher,">40, 000",4,4,4,4,4,4,4,4,5,3,4,4,Taste,No,Body Defect,Combo_VCS,Chocolate,More than one flavoured,neutral,agree
+22,Male,Student,"10,000 - 20,000",4,5,5,5,4,4,4,4,4,5,4,4,Taste,Yes,Body Defect,Combo_VCS,Chocolate,single flavoured,agree,agree
+23,Female,Marketing,"10,000 - 20,000",5,5,5,5,5,5,5,5,5,5,5,5,Taste,Yes,Texture defect,Combo_VLM,Caramel,More than one flavoured,neutral,Strongly agree
+23,Male,Studying,"<10,000",5,5,5,5,5,5,5,5,5,5,5,5,Quality,Yes,Texture defect,Combo_VCS,Chocolate,More than one flavoured,Strongly agree,Strongly agree
+24,Male,Employ,"10,000 - 20,000",4,4,4,4,3,4,3,3,3,4,4,4,Taste,No,,Combo_VCS,Chocolate,More than one flavoured,neutral,neutral
+25,Male,Febin,">40, 000",4,4,4,4,5,4,5,4,4,5,4,5,Price,Yes,Texture defect,Combo_VCS,Caramel,single flavoured,agree,agree
+22,Female,Private Employee,"10,000 - 20,000",1,5,5,5,5,5,4,5,5,5,5,5,Taste,No,,Combo_VCS,Caramel,single flavoured,Strongly agree,Strongly agree
+27,Male,Student,"20,000 - 30,000",3,5,5,5,5,5,3,4,4,5,5,4,Taste,No,,Combo_VCS,Caramel,single flavoured,agree,agree
+45,Male,Business,"30,000 - 40,000",5,5,5,5,5,5,5,5,5,5,5,5,Taste,No,Nil,Combo_VCS,Vanila,single flavoured,Strongly agree,Strongly agree
+20,Male,Student,"<10,000",2,4,3,3,4,3,3,3,4,3,3,3,Taste,No,Quantity issues,Combo_VCS,Caramel,More than one flavoured,neutral,disagree
+20,Male,Student,"<10,000",4,5,3,3,4,3,2,2,4,2,3,3,Quality,Yes,Quantity issues,Combo_VCS,"
+Butterscotch",More than one flavoured,agree,agree
+21,Male,Nothing,"<10,000",3,3,3,2,4,3,2,2,4,3,3,2,Taste,No,Quality issues,Combo_VCS,Vanila,More than one flavoured,agree,agree
+21,Male,Engineer,"<10,000",5,5,4,5,5,5,5,5,5,4,5,5,Quality,Yes,Texture defect,Combo_CRC,Vanila,More than one flavoured,agree,Strongly agree
+,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,

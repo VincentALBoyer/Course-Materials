@@ -1,0 +1,121 @@
+%------------------------------------------------------------------------------
+% Template Documentation
+%
+% Instructions for Students:
+% - Use this template to report your coding work for the assignment.
+% - Include your name and student ID at the top of the document.
+% - Copy the definitions of the classes and methods you implemented.
+% - Provide a brief description of the implementation and how it meets the assignment requirements.
+% - Ensure your code is well-commented and follows the provided structure.
+% - Submit your completed report as instructed by your instructor.
+%
+% Example usage:
+% \section*{Title and Student Information}
+% \section*{Approach and Solution}
+% \section*{Class Definitions}
+% \section*{Method Implementations}
+% \section*{Test Cases and Results}
+% \section*{Discussion and Conclusion}
+%
+% Replace the placeholder text with your own content.
+%------------------------------------------------------------------------------
+
+
+
+
+\documentclass{style}
+
+
+
+\title{\Large \bf
+Assignment III: Library Management System}
+
+
+\begin{document}
+
+\noindent
+\begin{tabular*}{\textwidth}{ p{3cm}  l}
+\textbf{Student Name:} & \makebox[6cm]{\hrulefill} \\ % Write your name here
+\textbf{Student ID:} & \makebox[6cm]{\hrulefill} \\ % Write your student ID here
+\end{tabular*}
+
+\begin{instructions}
+
+    You are required to implement an AVL Tree to store double values using Object-Oriented Programming (OOP) principles in C++.
+
+    Your program should:
+    \begin{itemize}
+        \item Define a class for \textbf{AVLTree} that supports insertion, deletion, and searching of double values.
+        \item Implement balancing operations to maintain the AVL property after insertions and deletions.
+        \item Study and discuss the effect of floating-point precision on the correctness and balancing of the AVL tree (e.g., how comparing double values may affect insertions, deletions, and tree structure). Provide examples or test cases illustrating potential issues and how to handle them.
+        \item Implement traversal of the tree in-order, pre-order, and post-order.
+        \item Implement a method to merge two AVL trees without losing the AVL property:
+        \begin{enumerate}
+            \item Convert both trees to sorted arrays using in-order traversal.
+            \item Merge the two sorted arrays into one efficiently.
+            \item Construct a new AVL tree from the merged sorted array.
+            \item Include several test cases to demonstrate the merging process and the correctness of the resulting AVL tree.
+        \end{enumerate} 
+        \item Demonstrate encapsulation and other OOP concepts such as method overloading and operator overloading where applicable.
+    \end{itemize}
+
+    \textbf{Submission Requirements:}
+    \begin{itemize}
+        \item Include your well-commented source code in the report.
+        \item Provide sample test cases and their outputs.
+        \item Briefly explain your design choices and how OOP principles are applied.
+        \item Ensure your code is well-structured and follows best practices.
+
+    \end{itemize}
+
+\end{instructions}
+
+\section{Introduction}
+This document illustrates how to use the provided LaTeX class and environments for your programming assignment submissions. Use the \texttt{codelisting} environment for your code, and the \texttt{testcase} environment for worked examples.
+
+\section{Sample Code Listing}
+Below is an example of how to include C++ code in your report:
+
+\begin{codelisting}
+// Example: Hello World in C++
+#include <iostream>
+using namespace std;
+
+int main() {
+    cout << "Hello, world!" << endl;
+    return 0;
+}
+\end{codelisting}
+
+\section{Test Cases}
+Here are some sample test cases you can include in your report:
+\begin{testcase}[Swapping Two Numbers in C++]
+\begin{codelisting}
+int a = 5, b = 10;
+swap(a, b);
+cout << "a = " << a << ", b = " << b << endl;
+\end{codelisting   }
+
+Output:
+\begin{codelisting}
+a = 10, b = 5
+\end{codelisting}
+\end{testcase}
+
+\section{Inserting Figures}
+You can include figures in your report using the \texttt{figure} environment. Here is an example:   
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{ImageSample.png} % Replace with your image file
+    \caption{Sample Image}
+    \label{fig:sample-figure}
+\end{figure}
+
+
+
+
+
+
+
+
+\end{document}

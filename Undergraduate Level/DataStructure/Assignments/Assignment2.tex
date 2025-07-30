@@ -1,0 +1,112 @@
+%------------------------------------------------------------------------------
+% Template Documentation
+%
+% Instructions for Students:
+% - Use this template to report your coding work for the assignment.
+% - Include your name and student ID at the top of the document.
+% - Copy the definitions of the classes and methods you implemented.
+% - Provide a brief description of the implementation and how it meets the assignment requirements.
+% - Ensure your code is well-commented and follows the provided structure.
+% - Submit your completed report as instructed by your instructor.
+%
+% Example usage:
+% \section*{Title and Student Information}
+% \section*{Approach and Solution}
+% \section*{Class Definitions}
+% \section*{Method Implementations}
+% \section*{Test Cases and Results}
+% \section*{Discussion and Conclusion}
+%
+% Replace the placeholder text with your own content.
+%------------------------------------------------------------------------------
+
+
+
+
+\documentclass{style}
+
+
+
+\title{\Large \bf
+Assignment I: Library Management System}
+
+
+\begin{document}
+
+\noindent
+\begin{tabular*}{\textwidth}{ p{3cm}  l}
+\textbf{Student Name:} & \makebox[6cm]{\hrulefill} \\ % Write your name here
+\textbf{Student ID:} & \makebox[6cm]{\hrulefill} \\ % Write your student ID here
+\end{tabular*}
+
+\begin{instructions}
+
+    You are required to implement a Task Scheduler Implementation  using a queue data structure in C++.
+
+    \begin{itemize}
+        \item Implement a \textbf{Queue} class that manages tasks.
+        \item Each task should be represented by a simulated execution time (e.g., an integer or float).
+        \item Provide methods to add tasks to the queue, remove tasks from the queue, and display the current queue of tasks.
+        \item Demonstrate the scheduling and processing of tasks in your report. Simulate the execution of at least 5 tasks by printing their execution times.
+        \item Explain how the queue data structure is used to manage task scheduling.
+    \end{itemize}
+
+    \textbf{Submission Requirements:}
+    \begin{itemize}
+        \item Include your well-commented source code in the report.
+        \item Provide sample test cases and their outputs.
+        \item Briefly explain your design choices and how OOP principles and data structures are applied.
+        \item Ensure your code is well-structured and follows best practices.
+    \end{itemize}
+
+\end{instructions}
+
+\section{Introduction}
+This document illustrates how to use the provided LaTeX class and environments for your programming assignment submissions. Use the \texttt{codelisting} environment for your code, and the \texttt{testcase} environment for worked examples.
+
+\section{Sample Code Listing}
+Below is an example of how to include C++ code in your report:
+
+\begin{codelisting}
+// Example: Hello World in C++
+#include <iostream>
+using namespace std;
+
+int main() {
+    cout << "Hello, world!" << endl;
+    return 0;
+}
+\end{codelisting}
+
+\section{Test Cases}
+Here are some sample test cases you can include in your report:
+\begin{testcase}[Swapping Two Numbers in C++]
+\begin{codelisting}
+int a = 5, b = 10;
+swap(a, b);
+cout << "a = " << a << ", b = " << b << endl;
+\end{codelisting   }
+
+Output:
+\begin{codelisting}
+a = 10, b = 5
+\end{codelisting}
+\end{testcase}
+
+\section{Inserting Figures}
+You can include figures in your report using the \texttt{figure} environment. Here is an example:   
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{ImageSample.png} % Replace with your image file
+    \caption{Sample Image}
+    \label{fig:sample-figure}
+\end{figure}
+
+
+
+
+
+
+
+
+\end{document}

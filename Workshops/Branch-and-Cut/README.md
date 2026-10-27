@@ -23,7 +23,7 @@ PuLP), so you can focus on the concepts.
 
 - **Google Colab:** download a notebook, then *File → Upload notebook* at https://colab.research.google.com
   (or open it from Google Drive with *Open with → Google Colaboratory*).
-- **Locally:** Python 3 with Jupyter (or VS Code). The first cell of each notebook installs PuLP if it is missing;
+- **Locally:** Python 3 with Jupyter (or VS Code). The first cell of each notebook installs PuLP 4 with the HiGHS solver if needed;
   the notebooks also use numpy, matplotlib and networkx.
 
 Run the cells from top to bottom. Cells marked **✍️ TODO** are for you.

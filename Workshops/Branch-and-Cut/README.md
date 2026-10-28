@@ -19,6 +19,9 @@ PuLP), so you can focus on the concepts.
 | `04_Knapsack_Cover_Cuts.ipynb` | Knapsack cover inequalities and separation (optional, at home) | – |
 | `05_TSP_Branch_and_Cut.ipynb` | TSP: be the separation oracle, then code it | 6 |
 
+**Slides:** [`Workshop_Branch_and_Cut_Slides.pdf`](Workshop_Branch_and_Cut_Slides.pdf) (the links to the
+notebooks, the GeoGebra lab and the Miro board are clickable).
+
 **GeoGebra lab** (runs in the browser, nothing to install): a sandbox to plot your own equations, plus five
 interactive labs that follow the activities:
 https://vincentalboyer.github.io/Course-Materials/Workshops/Branch-and-Cut/GeoGebra_Lab.html

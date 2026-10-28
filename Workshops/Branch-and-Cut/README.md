@@ -1,4 +1,4 @@
-# Branch-and-Cut Workshop: notebooks
+# Branch-and-Cut Workshop: slides and notebooks
 
 Hands-on notebooks for a 2-hour online workshop on Branch-and-Cut, from the simplex method to the
 Traveling Salesperson Problem.

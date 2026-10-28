@@ -1,6 +1,8 @@
 
 # Course Materials by Vincent Boyer
 
+**Browse the materials:** https://vincentalboyer.github.io/Course-Materials/ (every course, with direct links to the PDFs and *Open in Colab* links for the notebooks).
+
 Welcome to the public repository containing materials used across the courses I teach. This includes lecture notes, code samples, exercises, and other resources organized by academic level and term (e.g., undergraduate, graduate, summer, and winter sessions).
 
 Feel free to explore, reuse, and adapt the content for your own learning or teaching purposes. If you use these materials in your own teaching or redistribute them, please cite this repository or credit Vincent Boyer. It helps acknowledge the effort and supports continued sharing of educational resources.

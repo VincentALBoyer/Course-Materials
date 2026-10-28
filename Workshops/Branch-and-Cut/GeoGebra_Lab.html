@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GeoGebra Cutting Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://www.geogebra.org/apps/deployggb.js"></script>
+<style>
+  :root { --blue:#003865; --accent:#0072CE; --light:#D0E8F8; --green:#007A4C; --red:#C8102E; --orange:#E07B00;
+          --ink:#1d2733; --muted:#5b6b7c; --bg:#f4f7fa; --card:#ffffff; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:Inter,"Segoe UI",Arial,sans-serif; line-height:1.5; }
+  header { background:var(--blue); color:#fff; padding:28px 16px; position:sticky; top:0; z-index:5; }
+  header .wrap, main { max-width:980px; margin:0 auto; }
+  header h1 { margin:0 0 6px; font-size:30px; }
+  header p { margin:0; color:var(--light); }
+  nav { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+  nav a { color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,.4); padding:3px 12px; border-radius:20px; font-size:14px; }
+  .switch { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:12px; }
+  .switch button { background:transparent; border:1px solid rgba(255,255,255,.6); color:#fff; padding:5px 14px; border-radius:20px; font-weight:600; }
+  .switch button.on { background:#fff; color:var(--blue); }
+  #pbtext { font-family:"JetBrains Mono",Consolas,monospace; font-size:14px; background:rgba(255,255,255,.1); padding:6px 12px; border-radius:4px; overflow-x:auto; }
+  main { padding:8px 16px 40px; }
+  section { background:var(--card); border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,.06); padding:20px; margin:22px 0; scroll-margin-top:200px; }
+  h2 { margin:0 0 4px; color:var(--blue); font-size:22px; }
+  .meta { color:var(--orange); font-weight:600; font-size:14px; margin-bottom:10px; }
+  .ggb { width:100%; min-height:480px; margin:14px 0; border:1px solid #dde5ee; border-radius:4px; overflow:hidden; }
+  ol.tasks li { margin-bottom:6px; }
+  details { margin-top:10px; }
+  summary { cursor:pointer; color:var(--accent); font-weight:600; }
+  pre { font-family:"JetBrains Mono",Consolas,monospace; font-size:12.5px; background:#0f2236; color:#d0e8f8; padding:12px; border-radius:4px; overflow-x:auto; }
+  button { font:inherit; font-size:13px; background:var(--accent); color:#fff; border:0; border-radius:3px; padding:5px 12px; cursor:pointer; }
+  .answer { border-left:4px solid var(--green); background:#eef7f2; padding:8px 12px; }
+  .answer p { margin:4px 0; }
+  .ggb.sandbox { min-height:600px; }
+  .tools { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+  table.cheat { border-collapse:collapse; font-size:14px; margin-top:8px; width:100%; }
+  table.cheat td { padding:4px 8px; border-bottom:1px solid #e6ecf2; vertical-align:top; }
+  table.cheat td:first-child { white-space:nowrap; }
+  table.cheat code { font-family:"JetBrains Mono",Consolas,monospace; font-size:12.5px; background:#eef3f8; padding:1px 4px; border-radius:3px; }
+  @media (max-width:700px) { table.cheat td:first-child { white-space:normal; } }
+  #log { display:none; }
+  footer { text-align:center; color:var(--muted); font-size:13px; padding:20px; }
+  @media (max-width:600px) { header { position:static; } header h1 { font-size:24px; } }
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>GeoGebra Cutting Lab</h1>
+  <p>Branch-and-Cut Workshop · the two problems of the workshop, method by method.</p>
+  <div class="switch">
+    <span>Problem:</span>
+    <button data-pb="E" class="on">E · explanation</button>
+    <button data-pb="P">P · practice</button>
+    <span id="pbtext"></span>
+  </div>
+  <nav><a href="#sandbox">0 · Sandbox</a><a href="#lab1">1 · Graphical</a><a href="#lab2">2 · Simplex</a><a href="#lab3">3 · Branching</a>
+       <a href="#lab4">4 · Gomory</a><a href="#lab5">5 · Chvátal–Gomory</a></nav>
+</div></header>
+
+<main>
+<p>Runs in the browser, nothing to install (needs internet: GeoGebra loads from geogebra.org).
+  In the applets, <b>x</b> is x₁ and <b>y</b> is x₂. The <b>Sandbox</b> is a blank GeoGebra window for your own
+  equations; in Labs 1–5, drag sliders, tick boxes, or type extra inequalities (e.g. <code>x + y &lt;= 5</code>) in the
+  <b>Input</b> bar. The switch above changes the problem in every lab (not in the Sandbox).
+  If an applet does not load, open <a href="https://www.geogebra.org/classic" target="_blank" rel="noopener">GeoGebra Classic</a>
+  and paste the commands shown under each lab, one line at a time.</p>
+
+<section id="sandbox">
+  <h2>Sandbox · write and plot your own equations</h2>
+  <div class="meta">Activity 1 · draw P yourself here first · also for the cuts of Activities 4 and 5</div>
+  <p>A full GeoGebra window: type in the <b>Input</b> bar (left), press Enter, the object appears in the graph.
+    The E/P switch does <b>not</b> erase your work here. Take a screenshot for Miro when you are done.</p>
+  <details open><summary>What to type (x is x₁, y is x₂)</summary>
+    <table class="cheat">
+      <tr><td><code>x + 2y = 8</code></td><td>a line (the boundary of a constraint)</td></tr>
+      <tr><td><code>x + 2y &lt;= 8 &amp;&amp; 2x + y &lt;= 9 &amp;&amp; x &gt;= 0 &amp;&amp; y &gt;= 0</code></td><td>the feasible region (all constraints at once)</td></tr>
+      <tr><td><code>z = Slider(0, 25, 0.5)</code> then <code>3x + 4y = z</code></td><td>an objective line you can move</td></tr>
+      <tr><td><code>A = (10/3, 7/3)</code></td><td>a point</td></tr>
+      <tr><td><code>Intersect(x + 2y = 8, 2x + y = 9)</code></td><td>the intersection of two lines (an extreme point)</td></tr>
+      <tr><td><code>2x + 2y = 11</code></td><td>a cut (Activity 4): then check which integer points it keeps</td></tr>
+    </table>
+  </details>
+  <div class="tools">
+    <button id="sbLoad">Load the current problem</button>
+    <button id="sbPts">Integer points</button>
+    <button id="sbClear">Clear</button>
+  </div>
+  <div id="ggbS" class="ggb sandbox"></div>
+</section>
+
+<section id="lab1">
+  <h2>Lab 1 · Feasible region, objective line, rounding</h2>
+  <div class="meta">Activity 1 · draw P yourself in the Sandbox first, then check here</div>
+  <ol class="tasks">
+    <li>Drag the slider <b>z</b> to move the objective line. What is the last z for which it still touches the blue region? Where?</li>
+    <li>Tick <b>Show rounding</b>. Which rounded points are feasible? What objective value do they give?</li>
+    <li>Tick <b>Show conv(integer points)</b>. Which integer point does the objective line touch last inside the green hull?</li>
+  </ol>
+  <div id="ggb1" class="ggb"></div>
+  <details><summary>Answers</summary><div class="answer">
+    <p><b>E:</b> LP optimum (9/4, 15/4), z = 41.25. Rounding: (2,4) infeasible, (2,3) gives 34, (3,3) gives 39. IP optimum (0, 5), z = 40.</p>
+    <p><b>P:</b> LP optimum (10/3, 7/3), z = 58/3 ≈ 19.33. Rounding: only (3,2) is feasible, z = 17. IP optimum (2, 3), z = 18.</p></div></details>
+  <details><summary>GeoGebra commands</summary><button data-copy="1">Copy</button><pre data-cmds="1"></pre></details>
+</section>
+
+<section id="lab2">
+  <h2>Lab 2 · The simplex path along the extreme points</h2>
+  <div class="meta">Activity 2 · compare with notebook 01</div>
+  <ol class="tasks">
+    <li>Move the slider <b>iteration</b> from 0 to 2. The orange point is the current extreme point (basic solution).</li>
+    <li>At each step: which variable enters, which leaves? Why does the path follow an edge of the region?</li>
+    <li>The dashed line is the objective through the current point. Why does the method stop at iteration 2?</li>
+  </ol>
+  <div id="ggb2" class="ggb"></div>
+  <details><summary>Answers</summary><div class="answer">
+    <p><b>E:</b> (0,0) → (0,5) → (9/4, 15/4). x₂ enters / s₂ leaves, then x₁ enters / s₁ leaves. Final B⁻¹ = ¼[9 −1; −5 1].</p>
+    <p><b>P:</b> (0,0) → (0,4) → (10/3, 7/3). x₂ enters / s₁ leaves, then x₁ enters / s₂ leaves. Final basis (x₂, x₁), B⁻¹ = ⅓[2 −1; −1 2].</p>
+    <p>It stops when every reduced cost is ≤ 0: the objective line no longer crosses the region beyond the current vertex.</p></div></details>
+  <details><summary>GeoGebra commands</summary><button data-copy="2">Copy</button><pre data-cmds="2"></pre></details>
+</section>
+
+<section id="lab3">
+  <h2>Lab 3 · Branching</h2>
+  <div class="meta">Activity 3 · compare with your tree on Miro</div>
+  <ol class="tasks">
+    <li>Tick <b>Branch at the root</b>. A strip without integer points disappears: no integer point is lost.</li>
+    <li>Use the slider <b>z</b> to find the LP optimum of each child, then check with the labelled points
+      (<span style="color:#0072CE">●</span> branch again, <span style="color:#007A4C">◆</span> integer,
+      <span style="color:#C8102E">●</span> pruned).</li>
+    <li>Tick <b>Branch the left child</b> and repeat. Which child is pruned, and why?</li>
+  </ol>
+  <div id="ggb3" class="ggb"></div>
+  <details><summary>Answers</summary><div class="answer">
+    <p><b>E:</b> x₁ ≤ 2 → (2, 3.89), z = 41.11; x₁ ≥ 3 → (3, 3), z = 39 (pruned by bound once 40 is found).
+      Left child: x₂ ≤ 3 → (2, 3), z = 34; x₂ ≥ 4 → (1.8, 4), z = 41 (branch again). 9 nodes in total.</p>
+    <p><b>P:</b> x₁ ≤ 3 → (3, 5/2), z = 19; x₁ ≥ 4 → (4, 1), z = 16 (pruned by bound: 16 ≤ 18).
+      Left child: x₂ ≤ 2 → (3, 2), z = 17; x₂ ≥ 3 → (2, 3), z = 18, optimal. 5 nodes.</p></div></details>
+  <details><summary>GeoGebra commands</summary><button data-copy="3">Copy</button><pre data-cmds="3"></pre></details>
+</section>
+
+<section id="lab4">
+  <h2>Lab 4 · Gomory cuts until the LP is integer</h2>
+  <div class="meta">Activity 4 · the cuts printed by notebook 03</div>
+  <ol class="tasks">
+    <li>Move the slider <b>k</b> (number of Gomory cuts added). The red areas are cut off; the star is the new LP optimum.</li>
+    <li>Does each cut keep every black integer point? Does it remove the previous star?</li>
+    <li>Which integer points lie <i>on</i> each cut? Which cut is a facet of the integer hull?</li>
+  </ol>
+  <div id="ggb4" class="ggb"></div>
+  <details><summary>Answers</summary><div class="answer">
+    <p><b>E:</b> 4x₁+7x₂ ≤ 35, then 3x₁+5x₂ ≤ 25, then 2x₁+3x₂ ≤ 15 → (0, 5), z = 40. The last cut touches (0,5) and (3,3): a facet.
+      The x₂ row of the first basis gives it directly.</p>
+    <p><b>P:</b> 2x₁+2x₂ ≤ 11 → (3, 5/2), z = 19; then x₁+x₂ ≤ 5 → (2, 3), z = 18. The first cut touches no integer point
+      (its left side is even); the second touches (2,3), (3,2), (4,1): a facet.</p></div></details>
+  <details><summary>GeoGebra commands</summary><button data-copy="4">Copy</button><pre data-cmds="4"></pre></details>
+</section>
+
+<section id="lab5">
+  <h2>Lab 5 · Chvátal–Gomory explorer</h2>
+  <div class="meta">Activity 5 · find the multipliers on paper, check here</div>
+  <p>The dashed line is the combination u₁·(row 1) + u₂·(row 2). The orange line is the CG cut after rounding down
+    the coefficients and the right-hand side.</p>
+  <ol class="tasks">
+    <li>E: find u giving <b>2x₁ + 3x₂ ≤ 15</b>, then <b>4x₁ + 7x₂ ≤ 35</b>. Compare with the rows of B⁻¹ = ¼[9 −1; −5 1].</li>
+    <li>P: find u giving <b>x₁ + x₂ ≤ 5</b>.</li>
+    <li>E: u = (0, 1/9) gives x₂ ≤ 5. Valid? Does it remove the star?</li>
+  </ol>
+  <div id="ggb5" class="ggb"></div>
+  <details><summary>Answers</summary><div class="answer">
+    <p><b>E:</b> u = (3/4, 1/4) = (27/36, 9/36) → 2x₁+3x₂ ≤ 15; u = (1/4, 3/4) → 4x₁+7x₂ ≤ 35: the fractional parts of the rows of B⁻¹.
+      u = (1/2, 1/2) → 3x₁+5x₂ ≤ 25. u = (0, 1/9) = (0, 4/36) → x₂ ≤ 5: valid, but it does not remove the star.</p>
+    <p><b>P:</b> u = (1/3, 1/3) = (12/36, 12/36) → x₁ + x₂ ≤ 17/3 → x₁ + x₂ ≤ 5.</p></div></details>
+  <details><summary>GeoGebra commands</summary><button data-copy="5">Copy</button><pre data-cmds="5"></pre></details>
+</section>
+<pre id="log"></pre>
+</main>
+<footer>Prof. Angélica Salazar (UANL) · Prof. Vincent Boyer (Tecnológico de Monterrey) · Branch-and-Cut Workshop</footer>
+
+<script>
+// ---- The two problems: everything the labs draw comes from here ----
+const PB = {
+  E: {
+    label: 'E:  max 5x₁ + 8x₂   s.t.  x₁ + x₂ ≤ 6,  5x₁ + 9x₂ ≤ 45,  x ∈ ℤ²≥0',
+    c: [5, 8], rows: [[1, 1, 6], [5, 9, 45]], star: '(9/4, 15/4)', starXY: ['9/4', '15/4'],
+    view: [-0.6, 7.6, -0.6, 7.8], zmax: 45,
+    round: '{(2, 4), (2, 3), (3, 3)}', hull: '(0, 0), (6, 0), (3, 3), (0, 5)',
+    path: ['(0, 0)', '(0, 5)', '(9/4, 15/4)'],
+    steps: ['it 0: basis (s₁, s₂), x = (0, 0), z = 0.  c̄: x₁ 5, x₂ 8  →  x₂ enters, s₂ leaves',
+            'it 1: basis (s₁, x₂), x = (0, 5), z = 40.  c̄: x₁ 5/9, s₂ −8/9  →  x₁ enters, s₁ leaves',
+            'it 2: basis (x₁, x₂), x = (9/4, 15/4), z = 165/4.  All c̄ ≤ 0  →  optimal'],
+    root: ['x', 'x₁', 2], left: ['y', 'x₂', 3],
+    // LP optimum of each child: [point, caption, status]  (status: branch | integer | pruned)
+    nodes: { L: ['(2, 35/9)', 'x₁ ≤ 2:  (2, 3.89),  z = 41.11  → branch', 'branch'],
+             R: ['(3, 3)', 'x₁ ≥ 3:  (3, 3),  z = 39  → pruned (39 ≤ 40)', 'pruned'],
+             LL: ['(2, 3)', 'x₂ ≤ 3:  (2, 3),  z = 34  → integer', 'integer'],
+             LR: ['(9/5, 4)', 'x₂ ≥ 4:  (1.8, 4),  z = 41  → branch', 'branch'] },
+    cuts: [[4, 7, 35], [3, 5, 25], [2, 3, 15]],
+    opts: ['(9/4, 15/4)', '(7/3, 11/3)', '(5/2, 7/2)', '(0, 5)'],
+  },
+  P: {
+    label: 'P:  max 3x₁ + 4x₂   s.t.  x₁ + 2x₂ ≤ 8,  2x₁ + x₂ ≤ 9,  x ∈ ℤ²≥0',
+    c: [3, 4], rows: [[1, 2, 8], [2, 1, 9]], star: '(10/3, 7/3)', starXY: ['10/3', '7/3'],
+    view: [-0.5, 6.5, -0.5, 6.7], zmax: 25,
+    round: '{(3, 2), (3, 3), (4, 2), (4, 3)}', hull: '(0, 0), (4, 0), (4, 1), (2, 3), (0, 4)',
+    path: ['(0, 0)', '(0, 4)', '(10/3, 7/3)'],
+    steps: ['it 0: basis (s₁, s₂), x = (0, 0), z = 0.  c̄: x₁ 3, x₂ 4  →  x₂ enters, s₁ leaves',
+            'it 1: basis (x₂, s₂), x = (0, 4), z = 16.  c̄: x₁ 1, s₁ −2  →  x₁ enters, s₂ leaves',
+            'it 2: basis (x₂, x₁), x = (10/3, 7/3), z = 58/3.  All c̄ ≤ 0  →  optimal'],
+    root: ['x', 'x₁', 3], left: ['y', 'x₂', 2],
+    nodes: { L: ['(3, 5/2)', 'x₁ ≤ 3:  (3, 2.5),  z = 19  → branch', 'branch'],
+             R: ['(4, 1)', 'x₁ ≥ 4:  (4, 1),  z = 16  → pruned (16 ≤ 18)', 'pruned'],
+             LL: ['(3, 2)', 'x₂ ≤ 2:  (3, 2),  z = 17  → integer', 'integer'],
+             LR: ['(2, 3)', 'x₂ ≥ 3:  (2, 3),  z = 18  → integer, optimal', 'integer'] },
+    cuts: [[2, 2, 11], [1, 1, 5]],
+    opts: ['(10/3, 7/3)', '(3, 5/2)', '(2, 3)'],
+  },
+};
+const CUT_COLORS = ['#E07B00', '#7A3E9D', '#007A4C'];
+
+// ---- Small helpers that write GeoGebra syntax ----
+const term = (a, v) => (a === 1 ? '' : a) + v;
+const lin = (a, b) => `${term(a, 'x')} + ${term(b, 'y')}`;
+const feas = (p, extra = []) =>
+  p.rows.map(r => `${lin(r[0], r[1])} <= ${r[2]}`).concat(['x >= 0', 'y >= 0'], extra).join(' && ');
+// info texts: top of the view, right of the checkboxes (which GeoGebra puts at the top left)
+const textAt = (p, line) => `(${(p.view[0] + 0.35 * (p.view[1] - p.view[0])).toFixed(2)}, ${(p.view[3] - 0.5 - 0.42 * line).toFixed(2)})`;
+// labs with long checkbox captions: info text at the left, below the two checkboxes
+const textBelow = p => `(${(p.view[0] + 0.3).toFixed(2)}, ${(p.view[3] - 0.2 * (p.view[3] - p.view[2])).toFixed(2)})`;
+const region = (name, cond, color, fill) => [`${name}: ${cond}`, `SetColor(${name}, "${color}")`,
+  `SetFilling(${name}, ${fill})`, `SetLineThickness(${name}, 1)`, `ShowLabel(${name}, false)`];
+
+function base(p) {
+  return [
+    `R: ${feas(p)}`,
+    `Pts = KeepIf(${p.rows.map(r => `${r[0]} x(q) + ${r[1]} y(q) <= ${r[2]}`).join(' && ')}, q, Sequence((Mod(i, 8), floor(i / 8)), i, 0, 63))`,
+    `X = ${p.star}`,
+    'SetColor(R, "#0072CE")', 'SetFilling(R, 0.2)', 'SetLineThickness(R, 2)', 'SetColor(Pts, "black")', 'SetPointSize(Pts, 4)',
+    'SetColor(X, "#C8102E")', 'SetPointSize(X, 6)', 'SetPointStyle(X, 2)', 'ShowLabel(X, false)',
+    'ShowLabel(R, false)', 'ShowLabel(Pts, false)',
+  ];
+}
+
+function zSlider(p, below = false) {
+  return [`val = Slider(0, ${p.zmax}, 0.25)`, `SetValue(val, ${Math.round(p.zmax * 0.45)})`, 'SetCaption(val, "z")',
+    `SetCoords(val, 440, ${below ? 95 : 75})`,
+    `obj: ${lin(p.c[0], p.c[1])} = val`, 'SetColor(obj, "#E07B00")', 'SetLineThickness(obj, 9)', 'ShowLabel(obj, false)',
+    `zt = Text("objective line  ${p.c[0]}x₁ + ${p.c[1]}x₂ = " + val, ${below ? textBelow(p) : textAt(p, 0)})`];
+}
+
+// Lab 3: the LP optimum of each child, coloured by status, labelled with its solution
+const NODE_COLORS = { branch: '#0072CE', integer: '#007A4C', pruned: '#C8102E' };
+function nodePoints(p) {
+  const show = { L: 'b1 && b2 == false', R: 'b1', LL: 'b1 && b2', LR: 'b1 && b2' };   // L is replaced by its children
+  const slot = { R: 0, L: 1, LL: 1, LR: 2 };                                         // line in the details box
+  const w = p.view[1] - p.view[0], h = p.view[3] - p.view[2];
+  return Object.entries(p.nodes).flatMap(([k, [pt, cap, status]]) => [
+    // the point, with a short label (its z) so that neighbouring labels do not collide
+    `N_{${k}} = ${pt}`, `SetColor(N_{${k}}, "${NODE_COLORS[status]}")`, `SetPointSize(N_{${k}}, 7)`,
+    `SetPointStyle(N_{${k}}, ${status === 'integer' ? 4 : 0})`,          // 4 = filled diamond, 0 = dot
+    `SetCaption(N_{${k}}, "${cap.match(/z = [\d.]+/)[0]}")`, `SetLabelMode(N_{${k}}, 3)`, `ShowLabel(N_{${k}}, true)`,
+    `SetConditionToShowObject(N_{${k}}, ${show[k]})`,
+    // the details, one coloured line per node, top right under the z slider
+    `T_{${k}} = Text("${cap}", (${(p.view[0] + 0.56 * w).toFixed(2)}, ${(p.view[3] - (0.30 + 0.06 * slot[k]) * h).toFixed(2)}))`,
+    `SetColor(T_{${k}}, "${NODE_COLORS[status]}")`, `SetConditionToShowObject(T_{${k}}, ${show[k]})`,
+  ]);
+}
+
+const LABS = {
+  1: p => base(p).concat(zSlider(p), [
+    'r = Checkbox()', 'SetValue(r, false)', 'SetCaption(r, "Show rounding")',
+    `Rd = ${p.round}`, 'SetColor(Rd, "#C8102E")', 'SetPointSize(Rd, 5)', 'SetPointStyle(Rd, 1)',
+    'SetConditionToShowObject(Rd, r)', 'ShowLabel(Rd, false)',
+    'h = Checkbox()', 'SetValue(h, false)', 'SetCaption(h, "Show conv(integer points)")',
+    `H = Polygon(${p.hull})`, 'SetColor(H, "#007A4C")', 'SetFilling(H, 0.3)', 'SetLineThickness(H, 2)',
+    'SetConditionToShowObject(H, h)', 'ShowLabel(H, false)',
+  ]),
+  2: p => base(p).concat([
+    'it = Slider(0, 2, 1)', 'SetValue(it, 0)', 'SetCaption(it, "iteration")', 'SetCoords(it, 440, 75)',
+    `V = {${p.path.join(', ')}}`, 'SetVisibleInView(V, 1, false)',
+    'cur = Element(V, it + 1)', 'SetColor(cur, "#E07B00")', 'SetPointSize(cur, 8)', 'ShowLabel(cur, false)',
+    'path = Polyline(First(V, it + 1))', 'SetColor(path, "#E07B00")', 'SetLineThickness(path, 8)', 'ShowLabel(path, false)',
+    `objc: ${lin(p.c[0], p.c[1])} = ${p.c[0]} x(cur) + ${p.c[1]} y(cur)`,
+    'SetLineStyle(objc, 1)', 'SetColor(objc, "#5b6b7c")', 'SetLineThickness(objc, 4)', 'ShowLabel(objc, false)',
+    `steps = {${p.steps.map(s => `"${s}"`).join(', ')}}`, 'SetVisibleInView(steps, 1, false)',
+    `st = Text(Element(steps, it + 1), (${p.view[0] + 0.3}, ${p.view[3] - 0.5}))`,  // no checkboxes here: full width
+  ]),
+  3: p => {
+    const [v, vn, f] = p.root, [w, wn, g] = p.left;
+    return base(p).concat(zSlider(p, true), [
+      'b1 = Checkbox()', 'SetValue(b1, false)', `SetCaption(b1, "Branch at the root:  ${vn} ≤ ${f}  |  ${vn} ≥ ${f + 1}")`,
+      'b2 = Checkbox()', 'SetValue(b2, false)', `SetCaption(b2, "Branch the left child:  ${wn} ≤ ${g}  |  ${wn} ≥ ${g + 1}")`,
+      'SetConditionToShowObject(R, b1 == false)',
+    ], region('RL', feas(p, [`${v} <= ${f}`]), '#0072CE', 0.25),
+       region('RR', feas(p, [`${v} >= ${f + 1}`]), '#007A4C', 0.25),
+       region('RLL', feas(p, [`${v} <= ${f}`, `${w} <= ${g}`]), '#0072CE', 0.25),
+       region('RLR', feas(p, [`${v} <= ${f}`, `${w} >= ${g + 1}`]), '#7A3E9D', 0.25), [
+      'SetConditionToShowObject(RL, b1 && b2 == false)', 'SetConditionToShowObject(RR, b1)',
+      'SetConditionToShowObject(RLL, b1 && b2)', 'SetConditionToShowObject(RLR, b1 && b2)',
+    ], nodePoints(p));
+  },
+  4: p => {
+    const out = base(p).concat([
+      `k = Slider(0, ${p.cuts.length}, 1)`, 'SetValue(k, 0)', 'SetCoords(k, 440, 75)',
+      `Opt = {${p.opts.join(', ')}}`, 'SetVisibleInView(Opt, 1, false)',
+      'X = Element(Opt, k + 1)', 'SetColor(X, "#C8102E")', 'SetPointSize(X, 6)', 'SetPointStyle(X, 2)', 'ShowLabel(X, false)',
+    ]);
+    p.cuts.forEach(([a, b, r], i) => {
+      const n = i + 1, col = CUT_COLORS[i % CUT_COLORS.length];
+      out.push(...region(`C${n}`, feas(p, [`${lin(a, b)} >= ${r}`]), '#C8102E', 0.35),
+        `g${n}: ${lin(a, b)} = ${r}`, `SetColor(g${n}, "${col}")`, `SetLineThickness(g${n}, 5)`,
+        `SetConditionToShowObject(g${n}, k >= ${n})`, `SetConditionToShowObject(C${n}, k >= ${n})`);
+    });
+    out.push(`info = Text("cuts: " + k + "    LP optimum: (" + x(X) + ", " + y(X) + ")    z = " + (${p.c[0]} x(X) + ${p.c[1]} y(X)), ${textAt(p, 0)})`);
+    return out;
+  },
+  5: p => {
+    const [[a11, a12, b1], [a21, a22, b2]] = p.rows, [sx, sy] = p.starXY;
+    return base(p).concat([
+      'u_1 = Slider(0, 1, 1/36)', 'u_2 = Slider(0, 1, 1/36)', 'SetValue(u_1, 0)', 'SetValue(u_2, 0)',
+      `a_1 = floor(${a11} u_1 + ${a21} u_2)`, `a_2 = floor(${a12} u_1 + ${a22} u_2)`, `β = floor(${b1} u_1 + ${b2} u_2)`,
+      `comb: u_1 (${lin(a11, a12)}) + u_2 (${lin(a21, a22)}) = ${b1} u_1 + ${b2} u_2`,
+      'cg: a_1 x + a_2 y = β',
+      'SetLineStyle(comb, 1)', 'SetColor(comb, "#5b6b7c")', 'SetLineThickness(comb, 4)',
+      'SetColor(cg, "#E07B00")', 'SetLineThickness(cg, 7)', 'ShowLabel(comb, false)', 'ShowLabel(cg, false)',
+      `cut = Text("CG cut:  " + a_1 + " x₁ + " + a_2 + " x₂ ≤ " + β, ${textAt(p, 0)})`,
+      `chk = Text(If(a_1 * ${sx} + a_2 * ${sy} > β, "removes the star ${p.star}  ✔", "does NOT remove the star  ✘"), ${textAt(p, 1)})`,
+      `mult = Text("u = (" + (u_1 * 36) + "/36, " + (u_2 * 36) + "/36)", ${textAt(p, 2)})`,
+    ]);
+  },
+};
+
+// ---- Applets ----
+let current = 'E';
+const apis = {}, log = [];
+
+function build(key, api) {
+  const p = PB[current], cmds = LABS[key](p);
+  api.newConstruction();
+  let ok = 0;
+  for (const c of cmds) {
+    const res = api.evalCommand(c);
+    if (res || /^(Set|ShowLabel)/.test(c)) ok++; else log.push(`${current}${key} FAILED: ${c}`);  // styling commands return false
+  }
+  api.setCoordSystem(...p.view);
+  api.setAxesVisible(true, true);
+  api.setGridVisible(true);
+  log.push(`${current}${key}: ${ok}/${cmds.length} commands ok`);
+  document.getElementById('log').textContent = log.join('\n');
+}
+
+function inject(key) {
+  const id = 'ggb' + key, el = document.getElementById(id);
+  const w = Math.max(320, Math.min(el.clientWidth || 900, 940));
+  new GGBApplet({
+    id: 'api' + key, appName: 'classic', width: w, height: 480,
+    showToolBar: false, showMenuBar: false, showAlgebraInput: true, showResetIcon: false,
+    enableShiftDragZoom: true, enableRightClick: false, showZoomButtons: true, perspective: 'G', language: 'en',
+    appletOnLoad: api => {
+      api.setErrorDialogsActive(false);
+      api.setRounding('2');
+      apis[key] = api;
+      build(key, api);
+    },
+  }, true).inject(id);
+}
+
+// ---- Sandbox: a free GeoGebra window (toolbar + algebra view), never rebuilt by the E/P switch ----
+let sandbox = null;
+const SB_VIEW = [-0.6, 10, -0.6, 10];
+
+function sbReset(api) {
+  api.newConstruction();
+  api.setCoordSystem(...SB_VIEW);
+  api.setAxesVisible(true, true);
+  api.setGridVisible(true);
+}
+
+function sbRun(cmds) {
+  if (!sandbox) return;
+  for (const c of cmds) if (!sandbox.evalCommand(c) && !/^(Set|ShowLabel)/.test(c)) log.push(`sandbox FAILED: ${c}`);
+  document.getElementById('log').textContent = log.join('\n');
+}
+
+function injectSandbox() {
+  const el = document.getElementById('ggbS');
+  const w = Math.max(320, Math.min(el.clientWidth || 900, 940));
+  new GGBApplet({
+    id: 'apiS', appName: 'classic', width: w, height: 600, perspective: 'AG', language: 'en',
+    showToolBar: true, showMenuBar: false, showAlgebraInput: true, showResetIcon: false,
+    enableShiftDragZoom: true, enableRightClick: true, showZoomButtons: true, enableUndoRedo: true,
+    appletOnLoad: api => {
+      api.setErrorDialogsActive(true);        // here students type: show GeoGebra's error messages
+      api.setRounding('2');
+      sandbox = api;
+      sbReset(api);
+    },
+  }, true).inject('ggbS');
+}
+
+document.getElementById('sbLoad').addEventListener('click', () => {
+  const p = PB[current];
+  sbRun(p.rows.map((r, i) => `c_${i + 1}: ${lin(r[0], r[1])} = ${r[2]}`)
+    .concat([`R: ${feas(p)}`, 'SetColor(R, "#0072CE")', 'SetFilling(R, 0.2)']));
+});
+document.getElementById('sbPts').addEventListener('click', () =>
+  sbRun(['Pts = Join(Sequence(Sequence((i, j), i, 0, 9), j, 0, 9))', 'SetColor(Pts, "black")',
+         'SetPointSize(Pts, 3)', 'ShowLabel(Pts, false)']));
+document.getElementById('sbClear').addEventListener('click', () => sandbox && sbReset(sandbox));
+
+function showCommands() {
+  for (const k of Object.keys(LABS)) {
+    document.querySelector(`pre[data-cmds="${k}"]`).textContent = LABS[k](PB[current]).join('\n');
+  }
+  document.getElementById('pbtext').textContent = PB[current].label;
+}
+
+document.querySelectorAll('.switch button').forEach(b => b.addEventListener('click', () => {
+  current = b.dataset.pb;
+  document.querySelectorAll('.switch button').forEach(x => x.classList.toggle('on', x === b));
+  showCommands();
+  for (const [k, api] of Object.entries(apis)) build(k, api);
+}));
+document.querySelectorAll('button[data-copy]').forEach(b => b.addEventListener('click', () => {
+  navigator.clipboard.writeText(LABS[b.dataset.copy](PB[current]).join('\n')).then(() => { b.textContent = 'Copied'; });
+}));
+if (location.search.includes('debug')) document.getElementById('log').style.display = 'block';
+if (location.search.includes('pb=P')) document.querySelector('.switch button[data-pb="P"]').click();
+showCommands();
+window.addEventListener('load', () => { injectSandbox(); Object.keys(LABS).forEach(inject); });
+</script>
+</body>
+</html>

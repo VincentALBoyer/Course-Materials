@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Course Materials · Vincent Boyer</title>
+<meta name="description" content="Lecture notes, slides, notebooks and exercises from the courses taught by Vincent Boyer.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root { --blue:#003865; --accent:#0072CE; --light:#D0E8F8; --orange:#E07B00;
+          --ink:#1d2733; --muted:#5b6b7c; --bg:#f4f7fa; --card:#ffffff; --line:#dde5ee; --chip:#eef3f8; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --ink:#e6edf3; --muted:#9fb0c0; --bg:#0d1620; --card:#15212d;
+      --line:#26394b; --chip:#1d2c3b; --accent:#4da3ff; }
+  }
+  :root[data-theme="dark"] { --ink:#e6edf3; --muted:#9fb0c0; --bg:#0d1620; --card:#15212d;
+      --line:#26394b; --chip:#1d2c3b; --accent:#4da3ff; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:Inter,"Segoe UI",Arial,sans-serif; line-height:1.55; }
+  header { background:var(--blue); color:#fff; padding:40px 16px 28px; }
+  .wrap { max-width:1080px; margin:0 auto; }
+  header h1 { margin:0 0 8px; font-size:34px; font-weight:800; }
+  header p { margin:0 0 6px; color:var(--light); max-width:760px; }
+  nav { display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; }
+  nav a { color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,.45); padding:4px 14px; border-radius:20px; font-size:14px; }
+  nav a:hover { background:rgba(255,255,255,.12); }
+  .search { margin-top:18px; }
+  .search input { width:100%; max-width:420px; padding:9px 14px; border-radius:6px; border:0; font:inherit; font-size:15px; }
+  main { padding:8px 16px 40px; }
+  h2 { color:var(--accent); font-size:22px; margin:34px 0 12px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:16px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px; display:flex; flex-direction:column; }
+  .card.featured { grid-column:1 / -1; border-left:5px solid var(--orange); }
+  .card h3 { margin:0; font-size:18px; }
+  .count { color:var(--orange); font-weight:600; font-size:13px; margin:2px 0 6px; }
+  .card p { margin:0 0 8px; }
+  details { margin:4px 0; }
+  summary { cursor:pointer; color:var(--accent); font-weight:600; font-size:14px; }
+  ul.files { list-style:none; padding:0; margin:6px 0 4px; font-size:14px; }
+  ul.files li { display:flex; gap:10px; align-items:baseline; padding:3px 0; border-bottom:1px solid var(--line); }
+  ul.files li span { flex:1; min-width:0; overflow-wrap:anywhere; }
+  ul.files a { color:var(--accent); text-decoration:none; white-space:nowrap; font-size:13px; }
+  ul.files a:hover { text-decoration:underline; }
+  .subs { font-size:13px; color:var(--muted); }
+  .subs a { color:var(--accent); }
+  .links { margin-top:auto; padding-top:10px; display:flex; gap:8px; flex-wrap:wrap; }
+  .btn { font-size:13px; text-decoration:none; color:var(--accent); background:var(--chip); padding:5px 12px; border-radius:4px; }
+  .btn.primary { background:var(--accent); color:#fff; }
+  .note { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:14px 18px; margin-top:34px; font-size:14px; color:var(--muted); }
+  .empty { display:none; color:var(--muted); margin-top:24px; }
+  footer { text-align:center; color:var(--muted); font-size:13px; padding:24px 16px; }
+  footer a { color:var(--accent); }
+  @media (max-width:600px) { header h1 { font-size:26px; } .grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>Course Materials</h1>
+  <p>Lecture notes, slides, notebooks and exercises from the courses taught by <b>Vincent Boyer</b>,
+     organised by level and term.</p>
+  <p>Notebooks open directly in Google Colab: nothing to install.</p>
+  <nav><a href="#workshops">Workshops</a><a href="#graduate">Graduate courses</a><a href="#undergraduate">Undergraduate courses</a><a href="#summer">Summer classes</a><a href="#winter">Winter classes</a></nav>
+  <div class="search"><input id="q" type="search" placeholder="Filter courses (e.g. simplex, PuLP, C++)" aria-label="Filter courses"></div>
+</div></header>
+<main class="wrap">
+
+  <section class="level" id="workshops">
+    <h2>Workshops</h2>
+    <div class="grid">
+      <article class="card featured" data-search="branch-and-cut workshop two-hour online workshop with prof. angélica salazar (uanl): simplex in matrix form, branch-and-bound, gomory and chvátal–gomory cuts, cover cuts, and the tsp solved by branch-and-cut. workshops">
+        <h3>Branch-and-Cut workshop</h3>
+        <p class="count">5 notebooks</p>
+        <p>Two-hour online workshop with Prof. Angélica Salazar (UANL): simplex in matrix form, Branch-and-Bound, Gomory and Chvátal–Gomory cuts, cover cuts, and the TSP solved by Branch-and-Cut.</p>
+        <details><summary>Notebooks (5)</summary><ul class="files"><li><span>01 Simplex Matrix Form</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Workshops/Branch-and-Cut/01_Simplex_Matrix_Form.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Workshops/Branch-and-Cut/01_Simplex_Matrix_Form.ipynb">View</a></li><li><span>02 BranchAndBound PuLP</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Workshops/Branch-and-Cut/02_BranchAndBound_PuLP.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Workshops/Branch-and-Cut/02_BranchAndBound_PuLP.ipynb">View</a></li><li><span>03 Gomory Cuts</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Workshops/Branch-and-Cut/03_Gomory_Cuts.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Workshops/Branch-and-Cut/03_Gomory_Cuts.ipynb">View</a></li><li><span>04 Knapsack Cover Cuts</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Workshops/Branch-and-Cut/04_Knapsack_Cover_Cuts.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Workshops/Branch-and-Cut/04_Knapsack_Cover_Cuts.ipynb">View</a></li><li><span>05 TSP Branch and Cut</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Workshops/Branch-and-Cut/05_TSP_Branch_and_Cut.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Workshops/Branch-and-Cut/05_TSP_Branch_and_Cut.ipynb">View</a></li></ul></details>
+        <div class="links"><a class="btn primary" href="Workshops/Branch-and-Cut/GeoGebra_Lab.html">GeoGebra lab (runs in the browser)</a><a class="btn" href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Workshops/Branch-and-Cut">Folder on GitHub</a></div>
+      </article>
+    </div>
+  </section>
+  <section class="level" id="graduate">
+    <h2>Graduate courses</h2>
+    <div class="grid">
+      <article class="card" data-search="optimization methods the simplex method, branch-and-bound, cutting planes, duality and column generation, with assignments. graduate level">
+        <h3>Optimization Methods</h3>
+        <p class="count">11 PDF · 1 notebook</p>
+        <p>The simplex method, Branch-and-Bound, cutting planes, duality and column generation, with assignments.</p>
+        <details><summary>Notebooks (1)</summary><ul class="files"><li><span>BandB</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/OptimizationMethods/assets/BandB.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/OptimizationMethods/assets/BandB.ipynb">View</a></li></ul></details><details><summary>Slides, notes and assignments (11)</summary><ul class="files"><li><span>0-Introduction</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/OptimizationMethods/0-Introduction.pdf">PDF</a></li><li><span>1.1.TheSimplex</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/OptimizationMethods/1.1.TheSimplex.pdf">PDF</a></li><li><span>1.2.BranchandBound</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/OptimizationMethods/1.2.BranchandBound.pdf">PDF</a></li><li><span>1.3.CuttingPlanes</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/OptimizationMethods/1.3.CuttingPlanes.pdf">PDF</a></li><li><span>2.1.Duality</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/OptimizationMethods/2.1.Duality.pdf">PDF</a></li><li><span>2.2.ColumnGeneration</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/OptimizationMethods/2.2.ColumnGeneration.pdf">PDF</a></li><li><span>Assignment1.1</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/OptimizationMethods/Assignments/Assignment1.1.pdf">PDF</a></li><li><span>Assignment1.2</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/OptimizationMethods/Assignments/Assignment1.2.pdf">PDF</a></li><li><span>Assignment2.1</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/OptimizationMethods/Assignments/Assignment2.1.pdf">PDF</a></li><li><span>Assignment2.2</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/OptimizationMethods/Assignments/Assignment2.2.pdf">PDF</a></li><li><span>FinalProject</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/OptimizationMethods/Assignments/FinalProject.pdf">PDF</a></li></ul></details><p class="subs">Also: <a href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Graduate%20Level/OptimizationMethods/Assignments">Assignments</a></p>
+        <div class="links"><a class="btn" href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Graduate%20Level/OptimizationMethods">Folder on GitHub</a></div>
+      </article>
+      <article class="card" data-search="mathematical modelling modelling with pulp: tsp, set covering, job-shop scheduling, the orienteering problem; assignments and project. graduate level">
+        <h3>Mathematical Modelling</h3>
+        <p class="count">10 notebooks</p>
+        <p>Modelling with PuLP: TSP, set covering, job-shop scheduling, the orienteering problem; assignments and project.</p>
+        <details><summary>Notebooks (10)</summary><ul class="files"><li><span>Assignment1.1</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/Assignment1.1.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/Assignment1.1.ipynb">View</a></li><li><span>Assignment1.2</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/Assignment1.2.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/Assignment1.2.ipynb">View</a></li><li><span>Assignment2.1</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/Assignment2.1.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/Assignment2.1.ipynb">View</a></li><li><span>Assignment2.2</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/Assignment2.2.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/Assignment2.2.ipynb">View</a></li><li><span>FinalProject</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/FinalProject.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/FinalProject.ipynb">View</a></li><li><span>JSSP</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/JSSP.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/JSSP.ipynb">View</a></li><li><span>OrienteeringProblem</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/OrienteeringProblem.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/OrienteeringProblem.ipynb">View</a></li><li><span>PULPPackage</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/PULPPackage.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/PULPPackage.ipynb">View</a></li><li><span>SetCovering</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/SetCovering.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/SetCovering.ipynb">View</a></li><li><span>TSP</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/TSP.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/MathematicalModelling/TSP.ipynb">View</a></li></ul></details>
+        <div class="links"><a class="btn" href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Graduate%20Level/MathematicalModelling">Folder on GitHub</a></div>
+      </article>
+      <article class="card" data-search="scientific programming course slides and a tsp programming project. graduate level">
+        <h3>Scientific Programming</h3>
+        <p class="count">1 PDF</p>
+        <p>Course slides and a TSP programming project.</p>
+        <details><summary>Slides, notes and assignments (1)</summary><ul class="files"><li><span>ScientificProgramming</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/ScientificProgramming/ScientificProgramming.pdf">PDF</a></li></ul></details><p class="subs">Also: <a href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Graduate%20Level/ScientificProgramming/TSP">TSP</a></p>
+        <div class="links"><a class="btn" href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Graduate%20Level/ScientificProgramming">Folder on GitHub</a></div>
+      </article>
+      <article class="card" data-search="constraint programming reference material: the cp optimizer user&#x27;s manual. graduate level">
+        <h3>Constraint Programming</h3>
+        <p class="count">1 PDF</p>
+        <p>Reference material: the CP Optimizer user&#x27;s manual.</p>
+        <details><summary>Slides, notes and assignments (1)</summary><ul class="files"><li><span>usrcpoptimizer</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/ConstraintProgramming/usrcpoptimizer.pdf">PDF</a></li></ul></details>
+        <div class="links"><a class="btn" href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Graduate%20Level/ConstraintProgramming">Folder on GitHub</a></div>
+      </article>
+      <article class="card" data-search="mathematics calculus notes. graduate level">
+        <h3>Mathematics</h3>
+        <p class="count">1 PDF</p>
+        <p>Calculus notes.</p>
+        <details><summary>Slides, notes and assignments (1)</summary><ul class="files"><li><span>Calculus</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Graduate%20Level/Mathematics/Calculus.pdf">PDF</a></li></ul></details>
+        <div class="links"><a class="btn" href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Graduate%20Level/Mathematics">Folder on GitHub</a></div>
+      </article>
+    </div>
+  </section>
+  <section class="level" id="undergraduate">
+    <h2>Undergraduate courses</h2>
+    <div class="grid">
+      <article class="card" data-search="operations research lp modelling and solution, the transportation problem, integer programming and sensitivity analysis, with notebooks on the graphical method, the simplex and the two-phase method. undergraduate level">
+        <h3>Operations Research</h3>
+        <p class="count">7 PDF · 5 notebooks</p>
+        <p>LP modelling and solution, the transportation problem, integer programming and sensitivity analysis, with notebooks on the graphical method, the simplex and the two-phase method.</p>
+        <details><summary>Notebooks (5)</summary><ul class="files"><li><span>FinalProject</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/OperationResearch/JupyterNotebooks/FinalProject.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/OperationResearch/JupyterNotebooks/FinalProject.ipynb">View</a></li><li><span>GraphicalMethod</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/OperationResearch/JupyterNotebooks/GraphicalMethod.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/OperationResearch/JupyterNotebooks/GraphicalMethod.ipynb">View</a></li><li><span>IntegerProgramming</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/OperationResearch/JupyterNotebooks/IntegerProgramming.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/OperationResearch/JupyterNotebooks/IntegerProgramming.ipynb">View</a></li><li><span>SimplexMethod</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/OperationResearch/JupyterNotebooks/SimplexMethod.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/OperationResearch/JupyterNotebooks/SimplexMethod.ipynb">View</a></li><li><span>TwoPhaseSimplex</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/OperationResearch/JupyterNotebooks/TwoPhaseSimplex.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/OperationResearch/JupyterNotebooks/TwoPhaseSimplex.ipynb">View</a></li></ul></details><details><summary>Slides, notes and assignments (7)</summary><ul class="files"><li><span>1-LP Modeling</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/OperationResearch/1-LP_Modeling.pdf">PDF</a></li><li><span>2-LP Solution</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/OperationResearch/2-LP_Solution.pdf">PDF</a></li><li><span>3-TransportationProblem</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/OperationResearch/3-TransportationProblem.pdf">PDF</a></li><li><span>4-IntegerProgramming</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/OperationResearch/4-IntegerProgramming.pdf">PDF</a></li><li><span>5-SensitivityAnalysis</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/OperationResearch/5-SensitivityAnalysis.pdf">PDF</a></li><li><span>Exercises</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/OperationResearch/Exercises.pdf">PDF</a></li><li><span>Optimization Content</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/OperationResearch/Optimization_Content.pdf">PDF</a></li></ul></details>
+        <div class="links"><a class="btn" href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Undergraduate%20Level/OperationResearch">Folder on GitHub</a></div>
+      </article>
+      <article class="card" data-search="data structures object-oriented programming, linear and non-linear structures, hash tables, heaps and b-trees. undergraduate level">
+        <h3>Data Structures</h3>
+        <p class="count">19 PDF</p>
+        <p>Object-oriented programming, linear and non-linear structures, hash tables, heaps and B-trees.</p>
+        <details><summary>Slides, notes and assignments (19)</summary><ul class="files"><li><span>Introduction</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/0-Introduction/Introduction.pdf">PDF</a></li><li><span>1.1.IntroductionOOP</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/1-ObjectOrientedProgramming/1.1.IntroductionOOP.pdf">PDF</a></li><li><span>1.2.InheritancePolymorphism</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/1-ObjectOrientedProgramming/1.2.InheritancePolymorphism.pdf">PDF</a></li><li><span>1.3.AdvancedOOP</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/1-ObjectOrientedProgramming/1.3.AdvancedOOP.pdf">PDF</a></li><li><span>2.1.IntroductionLinearStructure</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/2-LinearDataStructure/2.1.IntroductionLinearStructure.pdf">PDF</a></li><li><span>2.2.LinkedLists</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/2-LinearDataStructure/2.2.LinkedLists.pdf">PDF</a></li><li><span>2.3.StacksAndQueues</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/2-LinearDataStructure/2.3.StacksAndQueues.pdf">PDF</a></li><li><span>3.1.IntroductionNonLinearStructure</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/3-NonLinearDataStructure/3.1.IntroductionNonLinearStructure.pdf">PDF</a></li><li><span>3.2.Trees</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/3-NonLinearDataStructure/3.2.Trees.pdf">PDF</a></li><li><span>3.3.Graphs</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/3-NonLinearDataStructure/3.3.Graphs.pdf">PDF</a></li><li><span>4.1.HashTable</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/4-AdvancedTopics/4.1.HashTable.pdf">PDF</a></li><li><span>4.2.Heaps</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/4-AdvancedTopics/4.2.Heaps.pdf">PDF</a></li><li><span>4.3.BTree</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/4-AdvancedTopics/4.3.BTree.pdf">PDF</a></li><li><span>Conclusion</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/5-Conclusion/Conclusion.pdf">PDF</a></li><li><span>Assignment1</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/Assignments/Assignment1.pdf">PDF</a></li><li><span>Assignment2</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/Assignments/Assignment2.pdf">PDF</a></li><li><span>Assignment3</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/Assignments/Assignment3.pdf">PDF</a></li><li><span>Assignment4</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/Assignments/Assignment4.pdf">PDF</a></li><li><span>FinalProject</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/DataStructure/Assignments/FinalProject.pdf">PDF</a></li></ul></details><p class="subs">Also: <a href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Undergraduate%20Level/DataStructure/0-Introduction">0-Introduction</a>, <a href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Undergraduate%20Level/DataStructure/1-ObjectOrientedProgramming">1-ObjectOrientedProgramming</a>, <a href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Undergraduate%20Level/DataStructure/2-LinearDataStructure">2-LinearDataStructure</a>, <a href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Undergraduate%20Level/DataStructure/3-NonLinearDataStructure">3-NonLinearDataStructure</a>, <a href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Undergraduate%20Level/DataStructure/4-AdvancedTopics">4-AdvancedTopics</a>, <a href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Undergraduate%20Level/DataStructure/5-Conclusion">5-Conclusion</a>, <a href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Undergraduate%20Level/DataStructure/Assignments">Assignments</a></p>
+        <div class="links"><a class="btn" href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Undergraduate%20Level/DataStructure">Folder on GitHub</a></div>
+      </article>
+      <article class="card" data-search="mathematics calculus: riemann sums, antiderivatives, solids of revolution; problem set (spanish). undergraduate level">
+        <h3>Mathematics</h3>
+        <p class="count">2 PDF · 4 notebooks</p>
+        <p>Calculus: Riemann sums, antiderivatives, solids of revolution; problem set (Spanish).</p>
+        <details><summary>Notebooks (4)</summary><ul class="files"><li><span>Antiderivative</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/Mathematics/JupyterNotebooks/Antiderivative.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/Mathematics/JupyterNotebooks/Antiderivative.ipynb">View</a></li><li><span>FinalProject</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/Mathematics/JupyterNotebooks/FinalProject.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/Mathematics/JupyterNotebooks/FinalProject.ipynb">View</a></li><li><span>RiemannSum</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/Mathematics/JupyterNotebooks/RiemannSum.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/Mathematics/JupyterNotebooks/RiemannSum.ipynb">View</a></li><li><span>SolidRevolution</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/Mathematics/JupyterNotebooks/SolidRevolution.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/Mathematics/JupyterNotebooks/SolidRevolution.ipynb">View</a></li></ul></details><details><summary>Slides, notes and assignments (2)</summary><ul class="files"><li><span>Calculus</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/Mathematics/Calculus.pdf">PDF</a></li><li><span>Problemario Matematicas I</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Undergraduate%20Level/Mathematics/Problemario%20Matematicas%20I.pdf">PDF</a></li></ul></details>
+        <div class="links"><a class="btn" href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Undergraduate%20Level/Mathematics">Folder on GitHub</a></div>
+      </article>
+    </div>
+  </section>
+  <section class="level" id="summer">
+    <h2>Summer classes</h2>
+    <div class="grid">
+      <article class="card" data-search="introduction to programming a python course and a data-analysis project. summer classes">
+        <h3>Introduction to Programming</h3>
+        <p class="count">1 PDF · 1 notebook</p>
+        <p>A Python course and a data-analysis project.</p>
+        <details><summary>Notebooks (1)</summary><ul class="files"><li><span>customer satisfaction</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Summer%20Classes/Introduction%20to%20Programming/DataAnalysis/customer_satisfaction.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Summer%20Classes/Introduction%20to%20Programming/DataAnalysis/customer_satisfaction.ipynb">View</a></li></ul></details><details><summary>Slides, notes and assignments (1)</summary><ul class="files"><li><span>Introduction to Programming</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Summer%20Classes/Introduction%20to%20Programming/Introduction_to_Programming.pdf">PDF</a></li></ul></details><p class="subs">Also: <a href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Summer%20Classes/Introduction%20to%20Programming/DataAnalysis">DataAnalysis</a>, <a href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Summer%20Classes/Introduction%20to%20Programming/PythonCourse">PythonCourse</a></p>
+        <div class="links"><a class="btn" href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Summer%20Classes/Introduction%20to%20Programming">Folder on GitHub</a></div>
+      </article>
+      <article class="card" data-search="introduction to c++ c++ through projects: the game of life and design patterns. summer classes">
+        <h3>Introduction to C++</h3>
+        <p class="count">2 PDF</p>
+        <p>C++ through projects: the Game of Life and design patterns.</p>
+        <details><summary>Slides, notes and assignments (2)</summary><ul class="files"><li><span>Presentación</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Summer%20Classes/Introduction%20to%20c%2B%2B/Presentaci%C3%B3n.pdf">PDF</a></li><li><span>ScientificProgramming</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Summer%20Classes/Introduction%20to%20c%2B%2B/ScientificProgramming.pdf">PDF</a></li></ul></details><p class="subs">Also: <a href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Summer%20Classes/Introduction%20to%20c%2B%2B/GOfL">GOfL</a>, <a href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Summer%20Classes/Introduction%20to%20c%2B%2B/GameOfLife">GameOfLife</a>, <a href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Summer%20Classes/Introduction%20to%20c%2B%2B/Patterns">Patterns</a></p>
+        <div class="links"><a class="btn" href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Summer%20Classes/Introduction%20to%20c%2B%2B">Folder on GitHub</a></div>
+      </article>
+      <article class="card" data-search="perceptron workshop slides and a demo notebook. summer classes">
+        <h3>Perceptron workshop</h3>
+        <p class="count">1 PDF · 1 notebook</p>
+        <p>Slides and a demo notebook.</p>
+        <details><summary>Notebooks (1)</summary><ul class="files"><li><span>perceptron demo</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Summer%20Classes/Perceptron/perceptron_demo.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Summer%20Classes/Perceptron/perceptron_demo.ipynb">View</a></li></ul></details><details><summary>Slides, notes and assignments (1)</summary><ul class="files"><li><span>perceptron workshop</span><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Summer%20Classes/Perceptron/perceptron_workshop.pdf">PDF</a></li></ul></details>
+        <div class="links"><a class="btn" href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Summer%20Classes/Perceptron">Folder on GitHub</a></div>
+      </article>
+    </div>
+  </section>
+  <section class="level" id="winter">
+    <h2>Winter classes</h2>
+    <div class="grid">
+      <article class="card" data-search="clinical pathways notebook and results. winter classes">
+        <h3>Clinical Pathways</h3>
+        <p class="count">1 notebook</p>
+        <p>Notebook and results.</p>
+        <details><summary>Notebooks (1)</summary><ul class="files"><li><span>ClinicalPathway</span><a href="https://colab.research.google.com/github/VincentALBoyer/Course-Materials/blob/main/Winter%20Classes/Clinical%20Pathways/ClinicalPathway.ipynb">Open in Colab</a><a href="https://github.com/VincentALBoyer/Course-Materials/blob/main/Winter%20Classes/Clinical%20Pathways/ClinicalPathway.ipynb">View</a></li></ul></details>
+        <div class="links"><a class="btn" href="https://github.com/VincentALBoyer/Course-Materials/tree/main/Winter%20Classes/Clinical%20Pathways">Folder on GitHub</a></div>
+      </article>
+    </div>
+  </section>
+  <p class="empty" id="empty">No course matches this filter.</p>
+  <div class="note">
+    Feel free to explore, reuse and adapt these materials. If you use them in your own teaching or redistribute
+    them, please cite this repository or credit Vincent Boyer.
+    These materials are shared as-is and may contain errors or outdated information: feedback is welcome.
+  </div>
+</main>
+<footer>Vincent Boyer · <a href="https://github.com/VincentALBoyer/Course-Materials">Repository on GitHub</a></footer>
+<script>
+  const q = document.getElementById('q');
+  q.addEventListener('input', () => {
+    const s = q.value.trim().toLowerCase();
+    let shown = 0;
+    document.querySelectorAll('.card').forEach(c => {
+      const ok = !s || c.dataset.search.includes(s) || c.textContent.toLowerCase().includes(s);
+      c.style.display = ok ? '' : 'none';
+      if (ok) shown++;
+    });
+    document.querySelectorAll('section.level').forEach(sec => {
+      sec.style.display = [...sec.querySelectorAll('.card')].some(c => c.style.display !== 'none') ? '' : 'none';
+    });
+    document.getElementById('empty').style.display = shown ? 'none' : 'block';
+  });
+</script>
+</body>
+</html>

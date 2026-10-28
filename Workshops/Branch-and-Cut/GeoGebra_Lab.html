@@ -40,12 +40,19 @@
   table.cheat td:first-child { white-space:nowrap; }
   table.cheat code { font-family:"JetBrains Mono",Consolas,monospace; font-size:12.5px; background:#eef3f8; padding:1px 4px; border-radius:3px; }
   @media (max-width:700px) { table.cheat td:first-child { white-space:normal; } }
+  .pbbox { font-family:"JetBrains Mono",Consolas,monospace; font-size:14px; background:var(--light); color:var(--blue);
+           padding:8px 12px; border-radius:4px; margin:10px 0; overflow-x:auto; }
+  body.pb-P .e-only, body:not(.pb-P) .p-only { display:none; }
+  body.labs-off section.lab { display:none; }
+  #labsBtn { background:var(--orange); }
+  .labs-note { color:var(--muted); font-size:14px; }
+  body:not(.labs-off) .labs-note { display:none; }
   #log { display:none; }
   footer { text-align:center; color:var(--muted); font-size:13px; padding:20px; }
   @media (max-width:600px) { header { position:static; } header h1 { font-size:24px; } }
 </style>
 </head>
-<body>
+<body class="labs-off">
 <header><div class="wrap">
   <h1>GeoGebra Cutting Lab</h1>
   <p>Branch-and-Cut Workshop · the two problems of the workshop, method by method.</p>
@@ -56,14 +63,15 @@
     <span id="pbtext"></span>
   </div>
   <nav><a href="#sandbox">0 · Sandbox</a><a href="#lab1">1 · Graphical</a><a href="#lab2">2 · Simplex</a><a href="#lab3">3 · Branching</a>
-       <a href="#lab4">4 · Gomory</a><a href="#lab5">5 · Chvátal–Gomory</a></nav>
+       <a href="#lab4">4 · Gomory</a><a href="#lab5">5 · Chvátal–Gomory</a><button id="labsBtn">Show labs 1–5</button></nav>
 </div></header>
 
 <main>
 <p>Runs in the browser, nothing to install (needs internet: GeoGebra loads from geogebra.org).
   In the applets, <b>x</b> is x₁ and <b>y</b> is x₂. The <b>Sandbox</b> is a blank GeoGebra window for your own
   equations; in Labs 1–5, drag sliders, tick boxes, or type extra inequalities (e.g. <code>x + y &lt;= 5</code>) in the
-  <b>Input</b> bar. The switch above changes the problem in every lab (not in the Sandbox).
+  <b>Input</b> bar. Labs 1–5 are hidden at first: start in the Sandbox. The switch above changes the problem in every
+  lab; in the Sandbox it only changes the formulation to plot (your drawing stays).
   If an applet does not load, open <a href="https://www.geogebra.org/classic" target="_blank" rel="noopener">GeoGebra Classic</a>
   and paste the commands shown under each lab, one line at a time.</p>
 
@@ -72,25 +80,28 @@
   <div class="meta">Activity 1 · draw P yourself here first · also for the cuts of Activities 4 and 5</div>
   <p>A full GeoGebra window: type in the <b>Input</b> bar (left), press Enter, the object appears in the graph.
     The E/P switch does <b>not</b> erase your work here. Take a screenshot for Miro when you are done.</p>
-  <details open><summary>What to type (x is x₁, y is x₂)</summary>
+  <div class="pbbox">Plot this problem: <span id="sbpb"></span></div>
+  <details open class="e-only"><summary>What to type, shown on E (x is x₁, y is x₂)</summary>
     <table class="cheat">
-      <tr><td><code>x + 2y = 8</code></td><td>a line (the boundary of a constraint)</td></tr>
-      <tr><td><code>x + 2y &lt;= 8 &amp;&amp; 2x + y &lt;= 9 &amp;&amp; x &gt;= 0 &amp;&amp; y &gt;= 0</code></td><td>the feasible region (all constraints at once)</td></tr>
-      <tr><td><code>z = Slider(0, 25, 0.5)</code> then <code>3x + 4y = z</code></td><td>an objective line you can move</td></tr>
-      <tr><td><code>A = (10/3, 7/3)</code></td><td>a point</td></tr>
-      <tr><td><code>Intersect(x + 2y = 8, 2x + y = 9)</code></td><td>the intersection of two lines (an extreme point)</td></tr>
-      <tr><td><code>2x + 2y = 11</code></td><td>a cut (Activity 4): then check which integer points it keeps</td></tr>
+      <tr><td><code>x + y = 6</code></td><td>a line (the boundary of a constraint)</td></tr>
+      <tr><td><code>x + y &lt;= 6 &amp;&amp; 5x + 9y &lt;= 45 &amp;&amp; x &gt;= 0 &amp;&amp; y &gt;= 0</code></td><td>the feasible region (all constraints at once)</td></tr>
+      <tr><td><code>z = Slider(0, 45, 0.5)</code> then <code>5x + 8y = z</code></td><td>an objective line you can move</td></tr>
+      <tr><td><code>A = (9/4, 15/4)</code></td><td>a point</td></tr>
+      <tr><td><code>Intersect(x + y = 6, 5x + 9y = 45)</code></td><td>the intersection of two lines (an extreme point)</td></tr>
+      <tr><td><code>2x + 3y = 15</code></td><td>a cut (Activity 4): then check which integer points it keeps</td></tr>
     </table>
   </details>
+  <p class="p-only"><b>Practice:</b> write P's lines, region and objective yourself, with the same syntax as for E.</p>
   <div class="tools">
-    <button id="sbLoad">Load the current problem</button>
+    <button id="sbLoad" class="e-only">Load the current problem</button>
     <button id="sbPts">Integer points</button>
     <button id="sbClear">Clear</button>
   </div>
   <div id="ggbS" class="ggb sandbox"></div>
 </section>
+<p class="labs-note">Labs 1–5 (ready-made applets to check your work) are hidden: use <b>Show labs 1–5</b> or the links above when your teacher asks.</p>
 
-<section id="lab1">
+<section id="lab1" class="lab">
   <h2>Lab 1 · Feasible region, objective line, rounding</h2>
   <div class="meta">Activity 1 · draw P yourself in the Sandbox first, then check here</div>
   <ol class="tasks">
@@ -105,7 +116,7 @@
   <details><summary>GeoGebra commands</summary><button data-copy="1">Copy</button><pre data-cmds="1"></pre></details>
 </section>
 
-<section id="lab2">
+<section id="lab2" class="lab">
   <h2>Lab 2 · The simplex path along the extreme points</h2>
   <div class="meta">Activity 2 · compare with notebook 01</div>
   <ol class="tasks">
@@ -121,7 +132,7 @@
   <details><summary>GeoGebra commands</summary><button data-copy="2">Copy</button><pre data-cmds="2"></pre></details>
 </section>
 
-<section id="lab3">
+<section id="lab3" class="lab">
   <h2>Lab 3 · Branching</h2>
   <div class="meta">Activity 3 · compare with your tree on Miro</div>
   <ol class="tasks">
@@ -140,7 +151,7 @@
   <details><summary>GeoGebra commands</summary><button data-copy="3">Copy</button><pre data-cmds="3"></pre></details>
 </section>
 
-<section id="lab4">
+<section id="lab4" class="lab">
   <h2>Lab 4 · Gomory cuts until the LP is integer</h2>
   <div class="meta">Activity 4 · the cuts printed by notebook 03</div>
   <ol class="tasks">
@@ -157,7 +168,7 @@
   <details><summary>GeoGebra commands</summary><button data-copy="4">Copy</button><pre data-cmds="4"></pre></details>
 </section>
 
-<section id="lab5">
+<section id="lab5" class="lab">
   <h2>Lab 5 · Chvátal–Gomory explorer</h2>
   <div class="meta">Activity 5 · find the multipliers on paper, check here</div>
   <p>The dashed line is the combination u₁·(row 1) + u₂·(row 2). The orange line is the CG cut after rounding down
@@ -414,11 +425,33 @@ function showCommands() {
     document.querySelector(`pre[data-cmds="${k}"]`).textContent = LABS[k](PB[current]).join('\n');
   }
   document.getElementById('pbtext').textContent = PB[current].label;
+  document.getElementById('sbpb').textContent = PB[current].label;
 }
+
+// ---- Labs 1-5: hidden by default (the Sandbox comes first); the applets load the first time they are shown ----
+let labsLoaded = false;
+const labsBtn = document.getElementById('labsBtn');
+function setLabs(on) {
+  document.body.classList.toggle('labs-off', !on);
+  labsBtn.textContent = on ? 'Hide labs 1–5' : 'Show labs 1–5';
+  if (on && !labsLoaded) { labsLoaded = true; Object.keys(LABS).forEach(inject); }
+}
+labsBtn.addEventListener('click', () => setLabs(document.body.classList.contains('labs-off')));
+document.querySelectorAll('nav a[href^="#lab"]').forEach(a => a.addEventListener('click', () => setLabs(true)));
+// a link from the slides (GeoGebra_Lab.html#lab3) opens the labs on that lab
+function labFromHash() {
+  if (!/^#lab[1-5]$/.test(location.hash)) return;
+  setLabs(true);
+  const sec = document.querySelector(location.hash);
+  sec.scrollIntoView();
+  setTimeout(() => sec.scrollIntoView(), 1500);   // again once the applets above have their final height
+}
+window.addEventListener('hashchange', labFromHash);
 
 document.querySelectorAll('.switch button').forEach(b => b.addEventListener('click', () => {
   current = b.dataset.pb;
   document.querySelectorAll('.switch button').forEach(x => x.classList.toggle('on', x === b));
+  document.body.classList.toggle('pb-P', current === 'P');   // P is practice: no "what to type", no "Load"
   showCommands();
   for (const [k, api] of Object.entries(apis)) build(k, api);
 }));
@@ -428,7 +461,7 @@ document.querySelectorAll('button[data-copy]').forEach(b => b.addEventListener('
 if (location.search.includes('debug')) document.getElementById('log').style.display = 'block';
 if (location.search.includes('pb=P')) document.querySelector('.switch button[data-pb="P"]').click();
 showCommands();
-window.addEventListener('load', () => { injectSandbox(); Object.keys(LABS).forEach(inject); });
+window.addEventListener('load', () => { injectSandbox(); labFromHash(); });
 </script>
 </body>
 </html>

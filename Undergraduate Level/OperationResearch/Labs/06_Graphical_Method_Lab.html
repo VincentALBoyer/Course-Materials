@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Graphical Method Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://www.geogebra.org/apps/deployggb.js"></script>
+<style>
+  :root { --blue:#003865; --accent:#0072CE; --light:#D0E8F8; --green:#007A4C; --red:#C8102E; --orange:#E07B00;
+          --ink:#1d2733; --muted:#5b6b7c; --bg:#f4f7fa; --card:#ffffff; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:Inter,"Segoe UI",Arial,sans-serif; line-height:1.5; }
+  header { background:var(--blue); color:#fff; padding:16px 16px 0; }
+  .wrap, main { max-width:1280px; margin:0 auto; }
+  header h1 { margin:0 0 2px; font-size:26px; }
+  header p { margin:0 0 12px; color:var(--light); font-size:15px; }
+  nav.tabs { display:flex; gap:4px; flex-wrap:wrap; position:sticky; top:0; z-index:5; background:var(--blue);
+             padding:0 16px; }
+  nav.tabs .wrap { display:flex; gap:4px; flex-wrap:wrap; width:100%; }
+  nav.tabs button { font:inherit; font-size:15px; font-weight:600; background:transparent; color:var(--light); border:0;
+                    border-radius:6px 6px 0 0; padding:9px 16px; cursor:pointer; }
+  nav.tabs button:hover { color:#fff; }
+  nav.tabs button.on { background:var(--bg); color:var(--blue); }
+  main { padding:6px 16px 30px; }
+  section.tab { display:none; background:var(--card); border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,.06);
+                padding:18px 20px; margin:14px 0; }
+  section.tab.on { display:block; }
+  h2 { margin:0 0 4px; color:var(--blue); font-size:22px; }
+  .meta { color:var(--orange); font-weight:600; font-size:14px; margin-bottom:8px; }
+  .cols { display:grid; grid-template-columns: 1fr 1fr; gap:6px 28px; }
+  @media (max-width:900px) { .cols { grid-template-columns: 1fr; } }
+  .ggb { width:100%; min-height:560px; margin:12px 0; border:1px solid #dde5ee; border-radius:4px; overflow:hidden; }
+  .ggb.sandbox { min-height:640px; }
+  ol.tasks { margin:6px 0; padding-left:22px; }
+  ol.tasks li { margin-bottom:4px; }
+  details { margin-top:8px; }
+  summary { cursor:pointer; color:var(--accent); font-weight:600; }
+  pre { font-family:"JetBrains Mono",Consolas,monospace; font-size:12.5px; background:#0f2236; color:#d0e8f8; padding:12px;
+        border-radius:4px; overflow-x:auto; }
+  button { font:inherit; font-size:13px; background:var(--accent); color:#fff; border:0; border-radius:3px; padding:5px 12px; cursor:pointer; }
+  button:disabled { background:#b7c3cf; cursor:not-allowed; }
+  .answer { border-left:4px solid var(--green); background:#eef7f2; padding:8px 12px; }
+  .answer p { margin:4px 0; }
+  .tools { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:10px; }
+  .switch { display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin:8px 0 4px; }
+  .switch button { background:#fff; color:var(--blue); border:1px solid var(--accent); border-radius:20px; padding:4px 14px; font-weight:600; }
+  .switch button.on { background:var(--accent); color:#fff; }
+  select { font:inherit; font-size:14px; padding:4px 8px; border-radius:4px; border:1px solid #b7c3cf; }
+  table.cheat { border-collapse:collapse; font-size:14px; margin-top:6px; width:100%; }
+  table.cheat td { padding:4px 8px; border-bottom:1px solid #e6ecf2; vertical-align:top; }
+  table.cheat td:first-child { white-space:nowrap; }
+  @media (max-width:700px) { table.cheat td:first-child { white-space:normal; } }
+  code, .mono { font-family:"JetBrains Mono",Consolas,monospace; font-size:12.5px; }
+  table.cheat code { background:#eef3f8; padding:1px 4px; border-radius:3px; }
+  .pbbox { font-family:"JetBrains Mono",Consolas,monospace; font-size:14px; background:var(--light); color:var(--blue);
+           padding:8px 12px; border-radius:4px; margin:8px 0; overflow-x:auto; white-space:pre-wrap; }
+  .note { color:var(--muted); font-size:14px; }
+  #log { display:none; }
+  footer { text-align:center; color:var(--muted); font-size:13px; padding:16px; }
+  @media (max-width:600px) { header h1 { font-size:22px; } nav.tabs button { padding:7px 10px; font-size:14px; } }
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>Graphical Method Lab</h1>
+  <p>Linear programs with two variables, drawn and solved in GeoGebra · runs in the browser, nothing to install
+    (needs internet: GeoGebra loads from geogebra.org). In every applet, <b>x</b> is the first variable and <b>y</b> the second.</p>
+</div></header>
+<nav class="tabs"><div class="wrap">
+  <button data-tab="sandbox" class="on">0 · Sandbox</button>
+  <button data-tab="graphical">1 · Graphical method</button>
+  <button data-tab="cases">2 · Special cases</button>
+  <button data-tab="integer">3 · Integer &amp; rounding</button>
+  <button data-tab="branching">4 · Branching</button>
+</div></nav>
+
+<main>
+<!-- ============================== 0 · Sandbox ============================== -->
+<section id="sandbox" class="tab on">
+  <h2>Sandbox · write and plot your own model</h2>
+  <div class="meta">Plot it yourself: lines, feasible region, objective line, corners</div>
+  <p>A full GeoGebra window: type in the <b>Input</b> bar (left), press Enter, the object appears in the graph.
+    Pick a problem to see its statement; changing the problem only moves the view, your drawing stays
+    (use <b>Clear</b> to start again). Take a screenshot when you are done.</p>
+  <div class="tools">
+    <label for="sbSel"><b>Problem:</b></label>
+    <select id="sbSel">
+      <optgroup label="Examples (with the commands)">
+        <option value="carpenter">Carpenter (max)</option>
+        <option value="dorian">Dorian (min)</option>
+      </optgroup>
+      <optgroup label="Show your graph (teams)">
+        <option value="T1">Team 1</option><option value="T2">Team 2</option><option value="T3">Team 3</option>
+        <option value="T4">Team 4</option><option value="T5">Team 5</option><option value="T6">Team 6</option>
+      </optgroup>
+      <optgroup label="Integer programming">
+        <option value="E">E · explanation</option>
+        <option value="P">P · practice</option>
+      </optgroup>
+    </select>
+    <button id="sbLoad">Load this example</button>
+    <button id="sbPts">Integer points</button>
+    <button id="sbClear">Clear</button>
+  </div>
+  <div class="pbbox" id="sbpb"></div>
+  <details><summary>What to type (shown on the carpenter: x is t, y is c)</summary>
+    <table class="cheat">
+      <tr><td><code>2x + y = 40</code></td><td>a line: the boundary of a constraint</td></tr>
+      <tr><td><code>2x + y &lt;= 40 &amp;&amp; x + 2y &lt;= 50 &amp;&amp; x &gt;= 0 &amp;&amp; y &gt;= 0</code></td><td>the feasible region (all constraints at once); a ≥ constraint is typed <code>&gt;=</code></td></tr>
+      <tr><td><code>z = Slider(0, 15000, 100)</code> then <code>500x + 300y = z</code></td><td>an objective line you can move with the slider</td></tr>
+      <tr><td><code>A = Intersect(2x + y = 40, x + 2y = 50)</code></td><td>a corner: the intersection of two lines</td></tr>
+      <tr><td><code>500 x(A) + 300 y(A)</code></td><td>the value of z at the corner A</td></tr>
+      <tr><td><code>B = (20, 0)</code></td><td>a point typed directly</td></tr>
+    </table>
+    <p class="note">Maximize: push the objective line as far as it still touches the region. Minimize: pull it back as
+      far as it still touches the region. The last point touched is the optimum.</p>
+  </details>
+  <div id="ggbS" class="ggb sandbox"></div>
+</section>
+
+<!-- ============================== 1 · Graphical method ============================== -->
+<section id="graphical" class="tab">
+  <h2>Lab 1 · The graphical method, step by step</h2>
+  <div class="meta">Feasible region → objective line → the last corner it touches</div>
+  <div class="switch" data-lab="graphical">
+    <button data-pb="carpenter" class="on">Carpenter (max)</button>
+    <button data-pb="dorian">Dorian (min)</button>
+    <span class="mono" data-text="graphical"></span>
+  </div>
+  <div class="cols">
+    <ol class="tasks">
+      <li>Which side of each line is feasible? Check that the blue region satisfies every constraint.</li>
+      <li>Move the slider <b>z</b>. Maximize: what is the largest z for which the orange line still touches the region?
+        Minimize: the smallest?</li>
+      <li>Tick <b>Show the corners</b>: is the optimum one of them? Then tick <b>Show the optimum</b> to check.</li>
+    </ol>
+    <div>
+      <details><summary>Answers</summary><div class="answer">
+        <p><b>Carpenter:</b> corners (0, 0) z = 0, (20, 0) z = 10,000, (10, 20) z = 11,000, (0, 25) z = 7,500.
+          Optimum t = 10, c = 20, z = $11,000: both constraints are tight.</p>
+        <p><b>Dorian:</b> the region is unbounded upwards, but we minimize. Corners (0, 14) z = 1,400,
+          (3.6, 1.4) z = 320, (12, 0) z = 600. Optimum x₁ = 3.6, x₂ = 1.4, z = 320.</p></div></details>
+      <details><summary>GeoGebra commands</summary><button data-copy="graphical">Copy</button><pre data-cmds="graphical"></pre></details>
+    </div>
+  </div>
+  <div id="ggb_graphical" class="ggb"></div>
+</section>
+
+<!-- ============================== 2 · Special cases ============================== -->
+<section id="cases" class="tab">
+  <h2>Lab 2 · Special cases</h2>
+  <div class="meta">Unique, multiple, unbounded, infeasible: what the picture tells you</div>
+  <div class="switch" data-lab="cases">
+    <button data-pb="unique" class="on">Unique</button>
+    <button data-pb="multiple">Multiple</button>
+    <button data-pb="unbounded">Unbounded</button>
+    <button data-pb="infeasible">Infeasible</button>
+    <span class="mono" data-text="cases"></span>
+  </div>
+  <div class="cols">
+    <ol class="tasks">
+      <li>Move the slider <b>z</b>. Where does the objective line leave the region, if it ever does?</li>
+      <li>Classify the case before ticking <b>Show the answer</b>, then check.</li>
+      <li>Multiple: which constraint is parallel to the objective? Unbounded: in which direction can you go forever?
+        Infeasible: why is there no blue region?</li>
+    </ol>
+    <div>
+      <details><summary>Answers</summary><div class="answer">
+        <p><b>Unique:</b> (0, 4), z = 8. <b>Multiple:</b> the objective x₁ + x₂ is parallel to x₁ + x₂ ≤ 4: every point of the
+          segment (0, 4)–(2, 2) is optimal, z = 4.</p>
+        <p><b>Unbounded:</b> along (1 + t, t) every constraint holds for all t ≥ 0 and z = 1 + 2t grows forever.
+          <b>Infeasible:</b> x₁ + x₂ cannot be both ≤ 2 and ≥ 4: the two half-planes do not meet.</p></div></details>
+      <details><summary>GeoGebra commands</summary><button data-copy="cases">Copy</button><pre data-cmds="cases"></pre></details>
+    </div>
+  </div>
+  <div id="ggb_cases" class="ggb"></div>
+</section>
+
+<!-- ============================== 3 · Integer & rounding ============================== -->
+<section id="integer" class="tab">
+  <h2>Lab 3 · Integer points and rounding</h2>
+  <div class="meta">Why rounding the LP optimum is not enough</div>
+  <div class="switch" data-lab="integer">
+    <button data-pb="E" class="on">E · explanation</button>
+    <button data-pb="P">P · practice</button>
+    <span class="mono" data-text="integer"></span>
+  </div>
+  <div class="cols">
+    <ol class="tasks">
+      <li>Drag the slider <b>z</b>. What is the last z for which the line still touches the blue region (LP optimum, red star)?</li>
+      <li>Tick <b>Show rounding</b>. Which rounded points are feasible? What objective value do they give?</li>
+      <li>Tick <b>Show conv(integer points)</b>. Which integer point does the objective line touch last inside the green hull?</li>
+    </ol>
+    <div>
+      <details><summary>Answers</summary><div class="answer">
+        <p><b>E:</b> LP optimum (9/4, 15/4), z = 41.25. Rounding: (2,4) infeasible, (2,3) gives 34, (3,3) gives 39. IP optimum (0, 5), z = 40.</p>
+        <p><b>P:</b> LP optimum (10/3, 7/3), z = 58/3 ≈ 19.33. Rounding: only (3,2) is feasible, z = 17. IP optimum (2, 3), z = 18.</p></div></details>
+      <details><summary>GeoGebra commands</summary><button data-copy="integer">Copy</button><pre data-cmds="integer"></pre></details>
+    </div>
+  </div>
+  <div id="ggb_integer" class="ggb"></div>
+</section>
+
+<!-- ============================== 4 · Branching ============================== -->
+<section id="branching" class="tab">
+  <h2>Lab 4 · Branching</h2>
+  <div class="meta">Branch-and-bound on the picture: split the region, keep every integer point</div>
+  <div class="switch" data-lab="branching">
+    <button data-pb="E" class="on">E · explanation</button>
+    <button data-pb="P">P · practice</button>
+    <span class="mono" data-text="branching"></span>
+  </div>
+  <div class="cols">
+    <ol class="tasks">
+      <li>Tick <b>Branch at the root</b>. A strip without integer points disappears: no integer point is lost.</li>
+      <li>Use the slider <b>z</b> to find the LP optimum of each child, then check with the labelled points
+        (<span style="color:#0072CE">●</span> branch again, <span style="color:#007A4C">◆</span> integer,
+        <span style="color:#C8102E">●</span> pruned).</li>
+      <li>Tick <b>Branch the left child</b> and repeat. Which child is pruned, and why?</li>
+    </ol>
+    <div>
+      <details><summary>Answers</summary><div class="answer">
+        <p><b>E:</b> x₁ ≤ 2 → (2, 3.89), z = 41.11; x₁ ≥ 3 → (3, 3), z = 39 (pruned by bound once 40 is found).
+          Left child: x₂ ≤ 3 → (2, 3), z = 34; x₂ ≥ 4 → (1.8, 4), z = 41 (branch again). 9 nodes in total.</p>
+        <p><b>P:</b> x₁ ≤ 3 → (3, 5/2), z = 19; x₁ ≥ 4 → (4, 1), z = 16 (pruned by bound: 16 ≤ 18).
+          Left child: x₂ ≤ 2 → (3, 2), z = 17; x₂ ≥ 3 → (2, 3), z = 18, optimal. 5 nodes.</p></div></details>
+      <details><summary>GeoGebra commands</summary><button data-copy="branching">Copy</button><pre data-cmds="branching"></pre></details>
+    </div>
+  </div>
+  <div id="ggb_branching" class="ggb"></div>
+</section>
+<p class="note">If an applet does not load, open <a href="https://www.geogebra.org/classic" target="_blank" rel="noopener">GeoGebra Classic</a>
+  and paste the commands shown under each lab, one line at a time.</p>
+<pre id="log"></pre>
+</main>
+<footer>IN2040 · Optimization of Organizational Processes · Prof. Vincent Boyer · Tecnológico de Monterrey</footer>
+
+<script>
+// ---- The problems. rows: [a, b, sense, rhs] means a·x + b·y (sense) rhs; x, y >= 0 always ----
+// ymin/ymax: vertical range of the view; the horizontal range follows the applet's shape (same scale on both axes)
+const PB = {
+  // examples of the graphical method
+  carpenter: { label: 'max z = 500t + 300c   s.t.  2t + c ≤ 40 (time),  t + 2c ≤ 50 (material),  t, c ≥ 0     (x = t, y = c)',
+    c: [500, 300], sense: 'max', rows: [[2, 1, '<=', 40], [1, 2, '<=', 50]], ymin: -2.5, ymax: 45, zmax: 16000, zstep: 100,
+    obj: '500t + 300c', corners: [['(0, 0)', '0'], ['(20, 0)', '10,000'], ['(10, 20)', '11,000'], ['(0, 25)', '7,500']],
+    star: '(10, 20)', answer: 'Optimum: t = 10, c = 20, z = 11,000', load: true },
+  dorian: { label: 'min z = 50x₁ + 100x₂   s.t.  7x₁ + 2x₂ ≥ 28,  2x₁ + 12x₂ ≥ 24,  x₁, x₂ ≥ 0',
+    c: [50, 100], sense: 'min', rows: [[7, 2, '>=', 28], [2, 12, '>=', 24]], ymin: -1, ymax: 16, zmax: 1600, zstep: 10,
+    obj: '50x₁ + 100x₂', corners: [['(0, 14)', '1,400'], ['(3.6, 1.4)', '320'], ['(12, 0)', '600']],
+    star: '(3.6, 1.4)', answer: 'Optimum: x₁ = 3.6, x₂ = 1.4, z = 320', load: true },
+  // "Show your graph" team problems: statements only (students plot them)
+  T1: { label: 'Team 1:  max z = x₁ + x₂   s.t.  x₁ + 2x₂ ≤ 8,  3x₁ + 2x₂ ≤ 12,  x ≥ 0', ymin: -0.6, ymax: 9 },
+  T2: { label: 'Team 2:  max z = 3x₁ + 2x₂   s.t.  x₁ + 2x₂ ≤ 8,  3x₁ + 2x₂ ≤ 12,  x ≥ 0', ymin: -0.6, ymax: 9 },
+  T3: { label: 'Team 3:  max z = x₁ + x₂   s.t.  −x₁ + x₂ ≤ 2,  x₁ − 2x₂ ≤ 2,  x ≥ 0', ymin: -0.6, ymax: 9 },
+  T4: { label: 'Team 4:  max z = 3x₁ + 2x₂   s.t.  x₁ + x₂ ≤ 3,  x₁ + x₂ ≥ 5,  x ≥ 0', ymin: -0.6, ymax: 9 },
+  T5: { label: 'Team 5:  min z = 2x₁ + 3x₂   s.t.  x₁ + x₂ ≥ 4,  x₁ + 3x₂ ≥ 6,  x ≥ 0', ymin: -0.6, ymax: 9 },
+  T6: { label: 'Team 6:  min z = x₁ + x₂   s.t.  x₁ + x₂ ≥ 4,  x₁ ≤ 6,  x₂ ≤ 6,  x ≥ 0', ymin: -0.6, ymax: 9 },
+  // special cases
+  unique: { label: 'max z = x₁ + 2x₂   s.t.  x₁ + x₂ ≤ 4,  2x₁ + x₂ ≤ 6,  x ≥ 0',
+    c: [1, 2], sense: 'max', rows: [[1, 1, '<=', 4], [2, 1, '<=', 6]], ymin: -0.6, ymax: 7, zmax: 14, zstep: 0.25, obj: 'x₁ + 2x₂',
+    corners: [['(0, 0)', '0'], ['(3, 0)', '3'], ['(2, 2)', '6'], ['(0, 4)', '8']], star: '(0, 4)',
+    answer: 'Unique optimum: (0, 4), z = 8' },
+  multiple: { label: 'max z = x₁ + x₂   s.t.  x₁ + x₂ ≤ 4,  2x₁ + x₂ ≤ 6,  x ≥ 0',
+    c: [1, 1], sense: 'max', rows: [[1, 1, '<=', 4], [2, 1, '<=', 6]], ymin: -0.6, ymax: 7, zmax: 10, zstep: 0.25, obj: 'x₁ + x₂',
+    corners: [['(0, 0)', '0'], ['(3, 0)', '3'], ['(2, 2)', '4'], ['(0, 4)', '4']],
+    extra: ['Segment((0, 4), (2, 2))', '#007A4C'],
+    answer: 'Multiple optima: every point of the segment (0, 4)–(2, 2), z = 4' },
+  unbounded: { label: 'max z = x₁ + x₂   s.t.  x₁ − x₂ ≤ 1,  −x₁ + x₂ ≤ 1,  x ≥ 0',
+    c: [1, 1], sense: 'max', rows: [[1, -1, '<=', 1], [-1, 1, '<=', 1]], ymin: -0.6, ymax: 7, zmax: 14, zstep: 0.25, obj: 'x₁ + x₂',
+    corners: [['(0, 0)', '0'], ['(1, 0)', '1'], ['(0, 1)', '1']],
+    extra: ['Vector((1, 0), (6, 5))', '#C8102E'],
+    answer: 'Unbounded: along (1 + t, t) the region never ends and z = 1 + 2t grows forever' },
+  infeasible: { label: 'max z = x₁ + x₂   s.t.  x₁ + x₂ ≤ 2,  x₁ + x₂ ≥ 4,  x ≥ 0',
+    c: [1, 1], sense: 'max', rows: [[1, 1, '<=', 2], [1, 1, '>=', 4]], ymin: -0.6, ymax: 7, zmax: 10, zstep: 0.25, obj: 'x₁ + x₂',
+    split: true, answer: 'Infeasible: x₁ + x₂ ≤ 2 and x₁ + x₂ ≥ 4 have no common point' },
+  // integer programming (Labs 3 and 4)
+  E: { label: 'E:  max 5x₁ + 8x₂   s.t.  x₁ + x₂ ≤ 6,  5x₁ + 9x₂ ≤ 45,  x ∈ ℤ²≥0',
+    c: [5, 8], sense: 'max', rows: [[1, 1, '<=', 6], [5, 9, '<=', 45]], ymin: -0.6, ymax: 7.8, zmax: 45, zstep: 0.25,
+    obj: '5x₁ + 8x₂', star: '(9/4, 15/4)', load: true,
+    round: '{(2, 4), (2, 3), (3, 3)}', hull: '(0, 0), (6, 0), (3, 3), (0, 5)',
+    root: ['x', 'x₁', 2], left: ['y', 'x₂', 3],
+    // LP optimum of each child: [point, caption, status]  (status: branch | integer | pruned)
+    nodes: { L: ['(2, 35/9)', 'x₁ ≤ 2:  (2, 3.89),  z = 41.11  → branch', 'branch'],
+             R: ['(3, 3)', 'x₁ ≥ 3:  (3, 3),  z = 39  → pruned (39 ≤ 40)', 'pruned'],
+             LL: ['(2, 3)', 'x₂ ≤ 3:  (2, 3),  z = 34  → integer', 'integer'],
+             LR: ['(9/5, 4)', 'x₂ ≥ 4:  (1.8, 4),  z = 41  → branch', 'branch'] } },
+  P: { label: 'P:  max 3x₁ + 4x₂   s.t.  x₁ + 2x₂ ≤ 8,  2x₁ + x₂ ≤ 9,  x ∈ ℤ²≥0',
+    c: [3, 4], sense: 'max', rows: [[1, 2, '<=', 8], [2, 1, '<=', 9]], ymin: -0.5, ymax: 6.7, zmax: 25, zstep: 0.25,
+    obj: '3x₁ + 4x₂', star: '(10/3, 7/3)',
+    round: '{(3, 2), (3, 3), (4, 2), (4, 3)}', hull: '(0, 0), (4, 0), (4, 1), (2, 3), (0, 4)',
+    root: ['x', 'x₁', 3], left: ['y', 'x₂', 2],
+    nodes: { L: ['(3, 5/2)', 'x₁ ≤ 3:  (3, 2.5),  z = 19  → branch', 'branch'],
+             R: ['(4, 1)', 'x₁ ≥ 4:  (4, 1),  z = 16  → pruned (16 ≤ 18)', 'pruned'],
+             LL: ['(3, 2)', 'x₂ ≤ 2:  (3, 2),  z = 17  → integer', 'integer'],
+             LR: ['(2, 3)', 'x₂ ≥ 3:  (2, 3),  z = 18  → integer, optimal', 'integer'] } },
+};
+const LINE_COLORS = ['#003865', '#7A3E9D', '#007A4C', '#E07B00'];
+const NODE_COLORS = { branch: '#0072CE', integer: '#007A4C', pruned: '#C8102E' };
+
+// ---- Small helpers that write GeoGebra syntax ----
+const term = (a, v) => (a === 1 ? '' : a === -1 ? '-' : a) + v;
+const lin = (a, b) => [a ? term(a, 'x') : '', b ? term(b, 'y') : ''].filter(Boolean).join(' + ').replace('+ -', '- ');
+const cond = r => `${lin(r[0], r[1])} ${r[2]} ${r[3]}`;
+const feas = (rows, extra = []) => rows.map(cond).concat(['x >= 0', 'y >= 0'], extra).join(' && ');
+const region = (name, c, color, fill) => [`${name}: ${c}`, `SetColor(${name}, "${color}")`,
+  `SetFilling(${name}, ${fill})`, `SetLineThickness(${name}, 1)`, `ShowLabel(${name}, false)`];
+
+// the view of a problem in an applet of W x H pixels: same scale on both axes, the extra width on the right
+function viewOf(p, W, H) {
+  const xmin = p.ymin;
+  return [xmin, xmin + (p.ymax - p.ymin) * W / H, p.ymin, p.ymax];
+}
+// info texts: right part of the view, line k from the top
+const textAt = (V, k) => `(${(V[0] + 0.5 * (V[1] - V[0])).toFixed(2)}, ${(V[3] - (0.08 + 0.065 * k) * (V[3] - V[2])).toFixed(2)})`;
+
+function lines(p) {
+  return p.rows.flatMap((r, i) => [`L_{${i + 1}}: ${lin(r[0], r[1])} = ${r[3]}`, `SetColor(L_{${i + 1}}, "${LINE_COLORS[i]}")`,
+    `SetLineThickness(L_{${i + 1}}, 4)`, `ShowLabel(L_{${i + 1}}, false)`]);
+}
+
+function zSlider(p, V, W, H) {
+  const verb = p.sense === 'max' ? 'push it out' : 'pull it back';
+  return [`val = Slider(0, ${p.zmax}, ${p.zstep})`, `SetValue(val, ${Math.round(p.zmax * 0.45 / p.zstep) * p.zstep})`,
+    'SetCaption(val, "z")', `SetCoords(val, ${Math.round(W * 0.5)}, 90)`,      // under the objective text
+    `obj: ${lin(p.c[0], p.c[1])} = val`, 'SetColor(obj, "#E07B00")', 'SetLineThickness(obj, 9)', 'ShowLabel(obj, false)',
+    `zt = Text("${p.sense} z:  objective line  ${p.obj} = " + val + "   (${verb})", ${textAt(V, 0)})`];
+}
+
+function base(p) {   // Labs 3-4: region, integer points, LP optimum
+  return [
+    ...region('R', feas(p.rows), '#0072CE', 0.2), 'SetLineThickness(R, 2)',
+    `Pts = KeepIf(${p.rows.map(r => `${r[0]} x(q) + ${r[1]} y(q) <= ${r[3]}`).join(' && ')}, q, Sequence((Mod(i, 8), floor(i / 8)), i, 0, 63))`,
+    'SetColor(Pts, "black")', 'SetPointSize(Pts, 4)', 'ShowLabel(Pts, false)',
+    `X = ${p.star}`, 'SetColor(X, "#C8102E")', 'SetPointSize(X, 6)', 'SetPointStyle(X, 2)', 'ShowLabel(X, false)',
+  ];
+}
+
+const LABS = {
+  // Lab 1 and Lab 2: lines, region, objective slider, corners, optimum / answer
+  graphical: (p, V, W, H) => {
+    const out = lines(p);
+    if (p.split) p.rows.forEach((r, i) => out.push(...region(`H_{${i + 1}}`, feas([r]), LINE_COLORS[i], 0.15)));
+    else out.push(...region('R', feas(p.rows), '#0072CE', 0.2));
+    out.push(...zSlider(p, V, W, H));
+    if (p.corners) {
+      out.push('kc = Checkbox()', 'SetValue(kc, false)', 'SetCaption(kc, "Show the corners")');
+      p.corners.forEach(([pt, z], i) => out.push(`C_{${i + 1}} = ${pt}`, `SetColor(C_{${i + 1}}, "#003865")`,
+        `SetPointSize(C_{${i + 1}}, 5)`, `SetCaption(C_{${i + 1}}, "z = ${z}")`, `SetLabelMode(C_{${i + 1}}, 3)`,
+        `ShowLabel(C_{${i + 1}}, true)`, `SetConditionToShowObject(C_{${i + 1}}, kc)`));
+    }
+    out.push('ko = Checkbox()', 'SetValue(ko, false)', `SetCaption(ko, "${p.load ? 'Show the optimum' : 'Show the answer'}")`,
+      `ans = Text("${p.answer}", ${textAt(V, 2)})`, 'SetColor(ans, "#007A4C")', 'SetConditionToShowObject(ans, ko)');
+    if (p.star) out.push(`X = ${p.star}`, 'SetColor(X, "#C8102E")', 'SetPointSize(X, 7)', 'SetPointStyle(X, 2)',
+      'ShowLabel(X, false)', 'SetConditionToShowObject(X, ko)');
+    if (p.extra) out.push(`ex = ${p.extra[0]}`, `SetColor(ex, "${p.extra[1]}")`, 'SetLineThickness(ex, 10)',
+      'ShowLabel(ex, false)', 'SetConditionToShowObject(ex, ko)');
+    return out;
+  },
+  // Lab 3: rounding and the integer hull
+  integer: (p, V, W, H) => base(p).concat(zSlider(p, V, W, H), [
+    'r = Checkbox()', 'SetValue(r, false)', 'SetCaption(r, "Show rounding")',
+    `Rd = ${p.round}`, 'SetColor(Rd, "#C8102E")', 'SetPointSize(Rd, 5)', 'SetPointStyle(Rd, 1)',
+    'SetConditionToShowObject(Rd, r)', 'ShowLabel(Rd, false)',
+    'h = Checkbox()', 'SetValue(h, false)', 'SetCaption(h, "Show conv(integer points)")',
+    `Hl = Polygon(${p.hull})`, 'SetColor(Hl, "#007A4C")', 'SetFilling(Hl, 0.3)', 'SetLineThickness(Hl, 2)',
+    'SetConditionToShowObject(Hl, h)', 'ShowLabel(Hl, false)',
+  ]),
+  // Lab 4: two levels of branching, the LP optimum of each child
+  branching: (p, V, W, H) => {
+    const [v, vn, f] = p.root, [w, wn, g] = p.left;
+    const show = { L: 'b1 && b2 == false', R: 'b1', LL: 'b1 && b2', LR: 'b1 && b2' };   // L is replaced by its children
+    const slot = { R: 0, L: 1, LL: 1, LR: 2 };                                         // line in the details box
+    return base(p).concat(zSlider(p, V, W, H), [
+      'b1 = Checkbox()', 'SetValue(b1, false)', `SetCaption(b1, "Branch at the root:  ${vn} ≤ ${f}  |  ${vn} ≥ ${f + 1}")`,
+      'b2 = Checkbox()', 'SetValue(b2, false)', `SetCaption(b2, "Branch the left child:  ${wn} ≤ ${g}  |  ${wn} ≥ ${g + 1}")`,
+      'SetConditionToShowObject(R, b1 == false)',
+    ], region('RL', feas(p.rows, [`${v} <= ${f}`]), '#0072CE', 0.25),
+       region('RR', feas(p.rows, [`${v} >= ${f + 1}`]), '#007A4C', 0.25),
+       region('RLL', feas(p.rows, [`${v} <= ${f}`, `${w} <= ${g}`]), '#0072CE', 0.25),
+       region('RLR', feas(p.rows, [`${v} <= ${f}`, `${w} >= ${g + 1}`]), '#7A3E9D', 0.25), [
+      'SetConditionToShowObject(RL, b1 && b2 == false)', 'SetConditionToShowObject(RR, b1)',
+      'SetConditionToShowObject(RLL, b1 && b2)', 'SetConditionToShowObject(RLR, b1 && b2)',
+    ], Object.entries(p.nodes).flatMap(([k, [pt, cap, status]]) => [
+      // the point, labelled with its z only, so that neighbouring labels do not collide
+      `N_{${k}} = ${pt}`, `SetColor(N_{${k}}, "${NODE_COLORS[status]}")`, `SetPointSize(N_{${k}}, 7)`,
+      `SetPointStyle(N_{${k}}, ${status === 'integer' ? 4 : 0})`,          // 4 = filled diamond, 0 = dot
+      `SetCaption(N_{${k}}, "${cap.match(/z = [\d.]+/)[0]}")`, `SetLabelMode(N_{${k}}, 3)`, `ShowLabel(N_{${k}}, true)`,
+      `SetConditionToShowObject(N_{${k}}, ${show[k]})`,
+      `T_{${k}} = Text("${cap}", ${textAt(V, 2.2 + slot[k])})`,
+      `SetColor(T_{${k}}, "${NODE_COLORS[status]}")`, `SetConditionToShowObject(T_{${k}}, ${show[k]})`,
+    ]));
+  },
+};
+LABS.cases = LABS.graphical;
+const DEFAULT = { graphical: 'carpenter', cases: 'unique', integer: 'E', branching: 'E' };
+const current = { ...DEFAULT };
+
+// ---- Lab applets: injected the first time their tab is opened (they need a visible width) ----
+const apis = {}, size = {}, log = [];
+const H_LAB = 560;
+
+function build(key) {
+  const api = apis[key], p = PB[current[key]], [W, H] = size[key], V = viewOf(p, W, H);
+  const cmds = LABS[key](p, V, W, H);
+  api.newConstruction();
+  let ok = 0;
+  for (const c of cmds) {
+    if (api.evalCommand(c) || /^(Set|ShowLabel)/.test(c)) ok++;   // styling commands return false
+    else log.push(`${key}/${current[key]} FAILED: ${c}`);
+  }
+  api.setCoordSystem(...V);
+  api.setAxesVisible(true, true);
+  api.setGridVisible(true);
+  log.push(`${key}/${current[key]}: ${ok}/${cmds.length} commands ok`);
+  document.getElementById('log').textContent = log.join('\n');
+}
+
+function inject(key) {
+  const el = document.getElementById('ggb_' + key);
+  const W = Math.max(320, Math.min(el.clientWidth || 1200, 1240));
+  size[key] = [W, H_LAB];
+  new GGBApplet({
+    id: 'api_' + key, appName: 'classic', width: W, height: H_LAB,
+    showToolBar: false, showMenuBar: false, showAlgebraInput: true, showResetIcon: false,
+    enableShiftDragZoom: true, enableRightClick: false, showZoomButtons: true, perspective: 'G', language: 'en',
+    appletOnLoad: api => {
+      api.setErrorDialogsActive(false);
+      api.setRounding('2');
+      apis[key] = api;
+      build(key);
+    },
+  }, true).inject('ggb_' + key);
+}
+
+function showCommands(key) {
+  const p = PB[current[key]], [W, H] = size[key] || [1200, H_LAB];
+  document.querySelector(`pre[data-cmds="${key}"]`).textContent = LABS[key](p, viewOf(p, W, H), W, H).join('\n');
+  document.querySelector(`[data-text="${key}"]`).textContent = p.label;
+}
+
+document.querySelectorAll('.switch[data-lab]').forEach(sw => sw.querySelectorAll('button').forEach(b =>
+  b.addEventListener('click', () => {
+    const key = sw.dataset.lab;
+    current[key] = b.dataset.pb;
+    sw.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+    showCommands(key);
+    if (apis[key]) build(key);
+  })));
+document.querySelectorAll('button[data-copy]').forEach(b => b.addEventListener('click', () => {
+  navigator.clipboard.writeText(document.querySelector(`pre[data-cmds="${b.dataset.copy}"]`).textContent)
+    .then(() => { b.textContent = 'Copied'; });
+}));
+
+// ---- Sandbox: a free GeoGebra window (toolbar + algebra view), never rebuilt by the problem picker ----
+let sandbox = null, sbSize = [1200, 640];
+const sbSel = document.getElementById('sbSel');
+
+function sbView() {
+  const p = PB[sbSel.value];
+  sandbox && sandbox.setCoordSystem(...viewOf(p, ...sbGraphSize()));
+}
+// the graphics view is the applet minus the algebra view (about 30% of the width)
+const sbGraphSize = () => [sbSize[0] * 0.7, sbSize[1] - 60];
+
+function sbReset(api) {
+  api.newConstruction();
+  api.setAxesVisible(true, true);
+  api.setGridVisible(true);
+  sbView();
+}
+
+function sbRun(cmds) {
+  if (!sandbox) return;
+  for (const c of cmds) if (!sandbox.evalCommand(c) && !/^(Set|ShowLabel)/.test(c)) log.push(`sandbox FAILED: ${c}`);
+  document.getElementById('log').textContent = log.join('\n');
+}
+
+function injectSandbox() {
+  const el = document.getElementById('ggbS');
+  const W = Math.max(320, Math.min(el.clientWidth || 1200, 1240));
+  sbSize = [W, 640];
+  new GGBApplet({
+    id: 'apiS', appName: 'classic', width: W, height: 640, perspective: 'AG', language: 'en',
+    showToolBar: true, showMenuBar: false, showAlgebraInput: true, showResetIcon: false,
+    enableShiftDragZoom: true, enableRightClick: true, showZoomButtons: true, enableUndoRedo: true,
+    appletOnLoad: api => {
+      api.setErrorDialogsActive(true);        // here students type: show GeoGebra's error messages
+      api.setRounding('2');
+      sandbox = api;
+      sbReset(api);
+    },
+  }, true).inject('ggbS');
+}
+
+function sbPick() {
+  const p = PB[sbSel.value];
+  document.getElementById('sbpb').textContent = 'Plot this problem:  ' + p.label;
+  document.getElementById('sbLoad').disabled = !p.load;
+  document.getElementById('sbLoad').title = p.load ? '' : 'Only for the examples: plot this one yourself';
+  sbView();
+}
+sbSel.addEventListener('change', sbPick);
+document.getElementById('sbLoad').addEventListener('click', () => {
+  const p = PB[sbSel.value];
+  if (!p.load) return;
+  sbRun(p.rows.map((r, i) => `c_${i + 1}: ${lin(r[0], r[1])} = ${r[3]}`)
+    .concat([`R: ${feas(p.rows)}`, 'SetColor(R, "#0072CE")', 'SetFilling(R, 0.2)', 'ShowLabel(R, false)']));
+});
+document.getElementById('sbPts').addEventListener('click', () =>
+  sbRun(['Pts = Join(Sequence(Sequence((i, j), i, 0, 12), j, 0, 12))', 'SetColor(Pts, "black")',
+         'SetPointSize(Pts, 3)', 'ShowLabel(Pts, false)']));
+document.getElementById('sbClear').addEventListener('click', () => sandbox && sbReset(sandbox));
+
+// ---- Tabs (a link such as 06_Graphical_Method_Lab.html#cases opens that tab) ----
+const loaded = {};
+function openTab(name) {
+  if (!document.getElementById(name) || !document.getElementById(name).classList.contains('tab')) return;
+  document.querySelectorAll('section.tab').forEach(s => s.classList.toggle('on', s.id === name));
+  document.querySelectorAll('nav.tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === name));
+  if (!loaded[name]) {
+    loaded[name] = true;
+    if (name === 'sandbox') injectSandbox(); else inject(name);
+  }
+  if (name !== 'sandbox') showCommands(name);
+  history.replaceState(null, '', '#' + name);
+}
+document.querySelectorAll('nav.tabs button').forEach(b => b.addEventListener('click', () => openTab(b.dataset.tab)));
+window.addEventListener('hashchange', () => openTab(location.hash.slice(1)));
+
+if (location.search.includes('debug')) document.getElementById('log').style.display = 'block';
+Object.keys(DEFAULT).forEach(showCommands);
+sbPick();
+window.addEventListener('load', () => {
+  const h = location.hash.slice(1), sec = h && document.getElementById(h);
+  openTab(sec && sec.classList.contains('tab') ? h : 'sandbox');
+});
+</script>
+</body>
+</html>

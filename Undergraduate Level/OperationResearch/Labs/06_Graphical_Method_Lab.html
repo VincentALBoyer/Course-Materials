@@ -100,7 +100,7 @@
       </optgroup>
     </select>
     <button id="sbLoad">Load this example</button>
-    <button id="sbPts">Integer points</button>
+    <button id="sbPts" title="Integer points of the visible graph (feasible ones only for the examples and E, P)">Integer points</button>
     <button id="sbClear">Clear</button>
   </div>
   <div class="pbbox" id="sbpb"></div>
@@ -188,7 +188,7 @@
   </div>
   <div class="cols">
     <ol class="tasks">
-      <li>Drag the slider <b>z</b>. What is the last z for which the line still touches the blue region (LP optimum, red star)?</li>
+      <li>Drag the slider <b>z</b>. What is the last z for which the line still touches the blue region (LP optimum, red circle)?</li>
       <li>Tick <b>Show rounding</b>. Which rounded points are feasible? What objective value do they give?</li>
       <li>Tick <b>Show conv(integer points)</b>. Which integer point does the objective line touch last inside the green hull?</li>
     </ol>
@@ -460,8 +460,19 @@ function sbView() {
   const p = PB[sbSel.value];
   sandbox && sandbox.setCoordSystem(...viewOf(p, ...sbGraphSize()));
 }
-// the graphics view is the applet minus the algebra view (about 30% of the width)
-const sbGraphSize = () => [sbSize[0] * 0.7, sbSize[1] - 60];
+// the real size of the graphics view (applet minus toolbar and algebra view), so that both axes keep the same scale
+function sbGraphSize() {
+  try {
+    const v = JSON.parse(sandbox.getViewProperties(1));
+    if (v.width > 50 && v.height > 50) return [v.width, v.height];
+  } catch (e) { /* older GeoGebra: fall back to an estimate */ }
+  return [sbSize[0] * 0.66, sbSize[1] - 55];
+}
+// the visible part of the graphics view: [xmin, xmax, ymin, ymax]
+function sbVisible() {
+  const v = JSON.parse(sandbox.getViewProperties(1));
+  return [v.xMin, v.xMin + v.width * v.invXscale, v.yMin, v.yMin + v.height * v.invYscale];
+}
 
 function sbReset(api) {
   api.newConstruction();
@@ -484,6 +495,7 @@ function injectSandbox() {
     id: 'apiS', appName: 'classic', width: W, height: 640, perspective: 'AG', language: 'en',
     showToolBar: true, showMenuBar: false, showAlgebraInput: true, showResetIcon: false,
     enableShiftDragZoom: true, enableRightClick: true, showZoomButtons: true, enableUndoRedo: true,
+    showKeyboardOnFocus: 'false',             // the on-screen keyboard would cover a third of the graph
     appletOnLoad: api => {
       api.setErrorDialogsActive(true);        // here students type: show GeoGebra's error messages
       api.setRounding('2');
@@ -507,9 +519,18 @@ document.getElementById('sbLoad').addEventListener('click', () => {
   sbRun(p.rows.map((r, i) => `c_${i + 1}: ${lin(r[0], r[1])} = ${r[3]}`)
     .concat([`R: ${feas(p.rows)}`, 'SetColor(R, "#0072CE")', 'SetFilling(R, 0.2)', 'ShowLabel(R, false)']));
 });
-document.getElementById('sbPts').addEventListener('click', () =>
-  sbRun(['Pts = Join(Sequence(Sequence((i, j), i, 0, 12), j, 0, 12))', 'SetColor(Pts, "black")',
-         'SetPointSize(Pts, 3)', 'ShowLabel(Pts, false)']));
+// integer points of the visible view; for a problem with known constraints, only the feasible ones
+// (the team problems have no rows on purpose: there the button shows the whole integer grid)
+document.getElementById('sbPts').addEventListener('click', () => {
+  if (!sandbox) return;
+  const p = PB[sbSel.value], [, xmax, , ymax] = sbVisible();
+  const nx = Math.min(Math.floor(xmax), 80), ny = Math.min(Math.floor(ymax), 80);
+  if (nx < 0 || ny < 0) return;
+  const grid = `Join(Sequence(Sequence((i, j), i, 0, ${nx}), j, 0, ${ny}))`;
+  const keep = p.rows && p.rows.map(r => `${r[0]} x(q) + ${r[1]} y(q) ${r[2]} ${r[3]}`).join(' && ');
+  sbRun([`Pts = ${keep ? `KeepIf(${keep}, q, ${grid})` : grid}`, 'SetColor(Pts, "black")',
+         `SetPointSize(Pts, ${nx > 30 ? 2 : 3})`, 'ShowLabel(Pts, false)']);
+});
 document.getElementById('sbClear').addEventListener('click', () => sandbox && sbReset(sandbox));
 
 // ---- Tabs (a link such as 06_Graphical_Method_Lab.html#cases opens that tab) ----

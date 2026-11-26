@@ -108,7 +108,7 @@
     <table class="cheat">
       <tr><td><code>2x + y = 40</code></td><td>a line: the boundary of a constraint</td></tr>
       <tr><td><code>2x + y &lt;= 40 &amp;&amp; x + 2y &lt;= 50 &amp;&amp; x &gt;= 0 &amp;&amp; y &gt;= 0</code></td><td>the feasible region (all constraints at once); a ≥ constraint is typed <code>&gt;=</code></td></tr>
-      <tr><td><code>k = Slider(0, 15000, 100)</code> then <code>500x + 300y = k</code></td><td>an objective line you can move with the slider (k is the value of z; do not name it <code>z</code>: GeoGebra reads z as the third axis and draws a 3D plane)</td></tr>
+      <tr><td><code>profit = Slider(0, 15000, 100)</code> then <code>500x + 300y = profit</code></td><td>an objective line you can move with the slider (Dorian: <code>cost</code>; other problems: <code>zvalue</code>). Do not name it <code>z</code>: GeoGebra reads z as the third axis and draws a 3D plane</td></tr>
       <tr><td><code>A = Intersect(2x + y = 40, x + 2y = 50)</code></td><td>a corner: the intersection of two lines</td></tr>
       <tr><td><code>500 x(A) + 300 y(A)</code></td><td>the value of z at the corner A</td></tr>
       <tr><td><code>B = (20, 0)</code></td><td>a point typed directly</td></tr>
@@ -131,7 +131,7 @@
   <div class="cols">
     <ol class="tasks">
       <li>Which side of each line is feasible? Check that the blue region satisfies every constraint.</li>
-      <li>Move the slider <b>z</b>. Maximize: what is the largest z for which the orange line still touches the region?
+      <li>Move the slider <b>profit</b> (carpenter) or <b>cost</b> (Dorian). Maximize: what is the largest z for which the orange line still touches the region?
         Minimize: the smallest?</li>
       <li>Tick <b>Show the corners</b>: is the optimum one of them? Then tick <b>Show the optimum</b> to check.</li>
     </ol>
@@ -160,7 +160,7 @@
   </div>
   <div class="cols">
     <ol class="tasks">
-      <li>Move the slider <b>z</b>. Where does the objective line leave the region, if it ever does?</li>
+      <li>Move the slider <b>zvalue</b>. Where does the objective line leave the region, if it ever does?</li>
       <li>Classify the case before ticking <b>Show the answer</b>, then check.</li>
       <li>Multiple: which constraint is parallel to the objective? Unbounded: in which direction can you go forever?
         Infeasible: why is there no blue region?</li>
@@ -188,7 +188,7 @@
   </div>
   <div class="cols">
     <ol class="tasks">
-      <li>Drag the slider <b>z</b>. What is the last z for which the line still touches the blue region (LP optimum, red circle)?</li>
+      <li>Drag the slider <b>zvalue</b>. What is the last z for which the line still touches the blue region (LP optimum, red circle)?</li>
       <li>Tick <b>Show rounding</b>. Which rounded points are feasible? What objective value do they give?</li>
       <li>Tick <b>Show conv(integer points)</b>. Which integer point does the objective line touch last inside the green hull?</li>
     </ol>
@@ -214,7 +214,7 @@
   <div class="cols">
     <ol class="tasks">
       <li>Tick <b>Branch at the root</b>. A strip without integer points disappears: no integer point is lost.</li>
-      <li>Use the slider <b>z</b> to find the LP optimum of each child, then check with the labelled points
+      <li>Use the slider <b>zvalue</b> to find the LP optimum of each child, then check with the labelled points
         (<span style="color:#0072CE">●</span> branch again, <span style="color:#007A4C">◆</span> integer,
         <span style="color:#C8102E">●</span> pruned).</li>
       <li>Tick <b>Branch the left child</b> and repeat. Which child is pruned, and why?</li>
@@ -244,11 +244,11 @@ const PB = {
   carpenter: { label: 'max z = 500t + 300c   s.t.  2t + c ≤ 40 (time),  t + 2c ≤ 50 (material),  t, c ≥ 0     (x = t, y = c)',
     c: [500, 300], sense: 'max', rows: [[2, 1, '<=', 40], [1, 2, '<=', 50]], ymin: -2.5, ymax: 45, zmax: 16000, zstep: 100,
     obj: '500t + 300c', corners: [['(0, 0)', '0'], ['(20, 0)', '10,000'], ['(10, 20)', '11,000'], ['(0, 25)', '7,500']],
-    star: '(10, 20)', answer: 'Optimum: t = 10, c = 20, z = 11,000', load: true },
+    star: '(10, 20)', answer: 'Optimum: t = 10, c = 20, z = 11,000', load: true, zname: 'profit' },
   dorian: { label: 'min z = 50x₁ + 100x₂   s.t.  7x₁ + 2x₂ ≥ 28,  2x₁ + 12x₂ ≥ 24,  x₁, x₂ ≥ 0',
     c: [50, 100], sense: 'min', rows: [[7, 2, '>=', 28], [2, 12, '>=', 24]], ymin: -1, ymax: 16, zmax: 1600, zstep: 10,
     obj: '50x₁ + 100x₂', corners: [['(0, 14)', '1,400'], ['(3.6, 1.4)', '320'], ['(12, 0)', '600']],
-    star: '(3.6, 1.4)', answer: 'Optimum: x₁ = 3.6, x₂ = 1.4, z = 320', load: true },
+    star: '(3.6, 1.4)', answer: 'Optimum: x₁ = 3.6, x₂ = 1.4, z = 320', load: true, zname: 'cost' },
   // "Show your graph" team problems: statements only (students plot them)
   T1: { label: 'Team 1:  max z = x₁ + x₂   s.t.  x₁ + 2x₂ ≤ 8,  3x₁ + 2x₂ ≤ 12,  x ≥ 0', ymin: -0.6, ymax: 9 },
   T2: { label: 'Team 2:  max z = 3x₁ + 2x₂   s.t.  x₁ + 2x₂ ≤ 8,  3x₁ + 2x₂ ≤ 12,  x ≥ 0', ymin: -0.6, ymax: 9 },
@@ -321,10 +321,11 @@ function lines(p) {
 
 function zSlider(p, V, W, H) {
   const verb = p.sense === 'max' ? 'push it out' : 'pull it back';
-  return [`val = Slider(0, ${p.zmax}, ${p.zstep})`, `SetValue(val, ${Math.round(p.zmax * 0.45 / p.zstep) * p.zstep})`,
-    'SetCaption(val, "z")', `SetCoords(val, ${Math.round(W * 0.5)}, 90)`,      // under the objective text
-    `obj: ${lin(p.c[0], p.c[1])} = val`, 'SetColor(obj, "#E07B00")', 'SetLineThickness(obj, 9)', 'ShowLabel(obj, false)',
-    `zt = Text("${p.sense} z:  objective line  ${p.obj} = " + val + "   (${verb})", ${textAt(V, 0)})`];
+  const v = p.zname || 'zvalue';      // never "z": GeoGebra reads z as the third axis
+  return [`${v} = Slider(0, ${p.zmax}, ${p.zstep})`, `SetValue(${v}, ${Math.round(p.zmax * 0.45 / p.zstep) * p.zstep})`,
+    `SetCaption(${v}, "${v}")`, `SetCoords(${v}, ${Math.round(W * 0.5)}, 90)`,      // under the objective text
+    `obj: ${lin(p.c[0], p.c[1])} = ${v}`, 'SetColor(obj, "#E07B00")', 'SetLineThickness(obj, 9)', 'ShowLabel(obj, false)',
+    `zt = Text("${p.sense} z:  objective line  ${p.obj} = " + ${v} + "   (${verb})", ${textAt(V, 0)})`];
 }
 
 function base(p) {   // Labs 3-4: region, integer points, LP optimum

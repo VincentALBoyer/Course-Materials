@@ -51,7 +51,7 @@
   table.cheat td { padding:4px 8px; border-bottom:1px solid #e6ecf2; vertical-align:top; }
   table.cheat td:first-child { white-space:nowrap; }
   @media (max-width:700px) { table.cheat td:first-child { white-space:normal; } }
-  code, .mono { font-family:"JetBrains Mono",Consolas,monospace; font-size:12.5px; }
+  code, .mono { font-family:"JetBrains Mono",Consolas,monospace; font-size:12.5px; font-variant-ligatures:none; }
   table.cheat code { background:#eef3f8; padding:1px 4px; border-radius:3px; }
   .pbbox { font-family:"JetBrains Mono",Consolas,monospace; font-size:14px; background:var(--light); color:var(--blue);
            padding:8px 12px; border-radius:4px; margin:8px 0; overflow-x:auto; white-space:pre-wrap; }
@@ -100,21 +100,14 @@
       </optgroup>
     </select>
     <button id="sbLoad">Load this example</button>
-    <button id="sbPts" title="Integer points of the visible graph (feasible ones only for the examples and E, P)">Integer points</button>
+    <button id="sbPts">Integer points</button>
     <button id="sbClear">Clear</button>
   </div>
   <div class="pbbox" id="sbpb"></div>
-  <details><summary>What to type (shown on the carpenter: x is t, y is c)</summary>
-    <table class="cheat">
-      <tr><td><code>2x + y = 40</code></td><td>a line: the boundary of a constraint</td></tr>
-      <tr><td><code>2x + y &lt;= 40 &amp;&amp; x + 2y &lt;= 50 &amp;&amp; x &gt;= 0 &amp;&amp; y &gt;= 0</code></td><td>the feasible region (all constraints at once); a ≥ constraint is typed <code>&gt;=</code></td></tr>
-      <tr><td><code>profit = Slider(0, 15000, 100)</code> then <code>500x + 300y = profit</code></td><td>an objective line you can move with the slider (Dorian: <code>cost</code>; other problems: <code>zvalue</code>). Do not name it <code>z</code>: GeoGebra reads z as the third axis and draws a 3D plane</td></tr>
-      <tr><td><code>A = Intersect(2x + y = 40, x + 2y = 50)</code></td><td>a corner: the intersection of two lines</td></tr>
-      <tr><td><code>500 x(A) + 300 y(A)</code></td><td>the value of z at the corner A</td></tr>
-      <tr><td><code>B = (20, 0)</code></td><td>a point typed directly</td></tr>
-    </table>
-    <p class="note">Maximize: push the objective line as far as it still touches the region. Minimize: pull it back as
-      far as it still touches the region. The last point touched is the optimum.</p>
+  <details id="sbAns"><summary>Answer (try it first)</summary>
+    <p class="note" id="sbAnsVars"></p>
+    <table class="cheat" id="sbAnsTable"></table>
+    <p class="note" id="sbAnsNote"></p>
   </details>
   <div id="ggbS" class="ggb sandbox"></div>
 </section>
@@ -244,18 +237,26 @@ const PB = {
   carpenter: { label: 'max z = 500t + 300c   s.t.  2t + c ≤ 40 (time),  t + 2c ≤ 50 (material),  t, c ≥ 0     (x = t, y = c)',
     c: [500, 300], sense: 'max', rows: [[2, 1, '<=', 40], [1, 2, '<=', 50]], ymin: -2.5, ymax: 45, zmax: 16000, zstep: 100,
     obj: '500t + 300c', corners: [['(0, 0)', '0'], ['(20, 0)', '10,000'], ['(10, 20)', '11,000'], ['(0, 25)', '7,500']],
-    star: '(10, 20)', answer: 'Optimum: t = 10, c = 20, z = 11,000', load: true, zname: 'profit' },
+    star: '(10, 20)', answer: 'Optimum: t = 10, c = 20, z = 11,000', load: true, zname: 'profit',
+    xy: 'x is t (tables), y is c (chairs)' },
   dorian: { label: 'min z = 50x₁ + 100x₂   s.t.  7x₁ + 2x₂ ≥ 28,  2x₁ + 12x₂ ≥ 24,  x₁, x₂ ≥ 0',
     c: [50, 100], sense: 'min', rows: [[7, 2, '>=', 28], [2, 12, '>=', 24]], ymin: -1, ymax: 16, zmax: 1600, zstep: 10,
     obj: '50x₁ + 100x₂', corners: [['(0, 14)', '1,400'], ['(3.6, 1.4)', '320'], ['(12, 0)', '600']],
     star: '(3.6, 1.4)', answer: 'Optimum: x₁ = 3.6, x₂ = 1.4, z = 320', load: true, zname: 'cost' },
-  // "Show your graph" team problems: statements only (students plot them)
-  T1: { label: 'Team 1:  max z = x₁ + x₂   s.t.  x₁ + 2x₂ ≤ 8,  3x₁ + 2x₂ ≤ 12,  x ≥ 0', ymin: -0.6, ymax: 9 },
-  T2: { label: 'Team 2:  max z = 3x₁ + 2x₂   s.t.  x₁ + 2x₂ ≤ 8,  3x₁ + 2x₂ ≤ 12,  x ≥ 0', ymin: -0.6, ymax: 9 },
-  T3: { label: 'Team 3:  max z = x₁ + x₂   s.t.  −x₁ + x₂ ≤ 2,  x₁ − 2x₂ ≤ 2,  x ≥ 0', ymin: -0.6, ymax: 9 },
-  T4: { label: 'Team 4:  max z = 3x₁ + 2x₂   s.t.  x₁ + x₂ ≤ 3,  x₁ + x₂ ≥ 5,  x ≥ 0', ymin: -0.6, ymax: 9 },
-  T5: { label: 'Team 5:  min z = 2x₁ + 3x₂   s.t.  x₁ + x₂ ≥ 4,  x₁ + 3x₂ ≥ 6,  x ≥ 0', ymin: -0.6, ymax: 9 },
-  T6: { label: 'Team 6:  min z = x₁ + x₂   s.t.  x₁ + x₂ ≥ 4,  x₁ ≤ 6,  x₂ ≤ 6,  x ≥ 0', ymin: -0.6, ymax: 9 },
+  // "Show your graph" team problems: the statement, and in `cons` the model for the Answer box only
+  // (no `rows` on purpose: Load this example and Integer points stay off for them)
+  T1: { label: 'Team 1:  max z = x₁ + x₂   s.t.  x₁ + 2x₂ ≤ 8,  3x₁ + 2x₂ ≤ 12,  x ≥ 0', ymin: -0.6, ymax: 9,
+    c: [1, 1], sense: 'max', cons: [[1, 2, '<=', 8], [3, 2, '<=', 12]], zmax: 10, zstep: 0.1 },
+  T2: { label: 'Team 2:  max z = 3x₁ + 2x₂   s.t.  x₁ + 2x₂ ≤ 8,  3x₁ + 2x₂ ≤ 12,  x ≥ 0', ymin: -0.6, ymax: 9,
+    c: [3, 2], sense: 'max', cons: [[1, 2, '<=', 8], [3, 2, '<=', 12]], zmax: 20, zstep: 0.1 },
+  T3: { label: 'Team 3:  max z = x₁ + x₂   s.t.  −x₁ + x₂ ≤ 2,  x₁ − 2x₂ ≤ 2,  x ≥ 0', ymin: -0.6, ymax: 9,
+    c: [1, 1], sense: 'max', cons: [[-1, 1, '<=', 2], [1, -2, '<=', 2]], zmax: 20, zstep: 0.1 },
+  T4: { label: 'Team 4:  max z = 3x₁ + 2x₂   s.t.  x₁ + x₂ ≤ 3,  x₁ + x₂ ≥ 5,  x ≥ 0', ymin: -0.6, ymax: 9,
+    c: [3, 2], sense: 'max', cons: [[1, 1, '<=', 3], [1, 1, '>=', 5]], zmax: 20, zstep: 0.1 },
+  T5: { label: 'Team 5:  min z = 2x₁ + 3x₂   s.t.  x₁ + x₂ ≥ 4,  x₁ + 3x₂ ≥ 6,  x ≥ 0', ymin: -0.6, ymax: 9,
+    c: [2, 3], sense: 'min', cons: [[1, 1, '>=', 4], [1, 3, '>=', 6]], zmax: 30, zstep: 0.1 },
+  T6: { label: 'Team 6:  min z = x₁ + x₂   s.t.  x₁ + x₂ ≥ 4,  x₁ ≤ 6,  x₂ ≤ 6,  x ≥ 0', ymin: -0.6, ymax: 9,
+    c: [1, 1], sense: 'min', cons: [[1, 1, '>=', 4], [1, 0, '<=', 6], [0, 1, '<=', 6]], zmax: 15, zstep: 0.1 },
   // special cases
   unique: { label: 'max z = x₁ + 2x₂   s.t.  x₁ + x₂ ≤ 4,  2x₁ + x₂ ≤ 6,  x ≥ 0',
     c: [1, 2], sense: 'max', rows: [[1, 1, '<=', 4], [2, 1, '<=', 6]], ymin: -0.6, ymax: 7, zmax: 14, zstep: 0.25, obj: 'x₁ + 2x₂',
@@ -506,11 +507,65 @@ function injectSandbox() {
   }, true).inject('ggbS');
 }
 
+// ---- Sandbox "Answer (try it first)": the commands to type for the selected problem ----
+const fmt = v => String(+v.toFixed(4));
+// the corners of {rows, x >= 0, y >= 0}: intersections of two boundaries that satisfy every constraint
+function cornersOf(rows) {
+  const bd = rows.map((r, i) => ({ a: r[0], b: r[1], r: r[3], i }))
+    .concat([{ a: 1, b: 0, r: 0, i: -1 }, { a: 0, b: 1, r: 0, i: -2 }]);
+  const ok = (x, y) => x > -1e-9 && y > -1e-9 && rows.every(r => {
+    const v = r[0] * x + r[1] * y - r[3]; return r[2] === '<=' ? v < 1e-9 : v > -1e-9; });
+  const out = [];
+  for (let m = 0; m < bd.length; m++) for (let n = m + 1; n < bd.length; n++) {
+    const P = bd[m], Q = bd[n], d = P.a * Q.b - P.b * Q.a;
+    if (Math.abs(d) < 1e-12) continue;
+    const x = (P.r * Q.b - P.b * Q.r) / d, y = (P.a * Q.r - P.r * Q.a) / d;
+    if (ok(x, y) && !out.some(c => Math.abs(c.x - x) < 1e-9 && Math.abs(c.y - y) < 1e-9)) out.push({ x, y, P, Q });
+  }
+  return out.sort((u, w) => u.x - w.x || u.y - w.y);
+}
+function sbAnswer() {
+  const p = PB[sbSel.value], rows = p.rows || p.cons, v = p.zname || 'zvalue', sign = s => s === '<=' ? '≤' : '≥';
+  const tbl = document.getElementById('sbAnsTable');
+  document.getElementById('sbAns').open = false;             // a new problem: hide its answer again
+  document.getElementById('sbAnsVars').textContent = (p.xy || 'x is x₁, y is x₂') + '. Type each command in the Input bar, then Enter.';
+  tbl.replaceChildren();
+  const row = (cmd, ...what) => {                             // what: strings, or ['code'] for inline code
+    const tr = tbl.insertRow(), c1 = tr.insertCell(), c2 = tr.insertCell();
+    c1.appendChild(Object.assign(document.createElement('code'), { textContent: cmd }));
+    for (const w of what) c2.append(Array.isArray(w) ? Object.assign(document.createElement('code'), { textContent: w[0] }) : w);
+  };
+  rows.forEach((r, i) => row(`${lin(r[0], r[1])} = ${r[3]}`,
+    `the boundary line of constraint ${i + 1} (${lin(r[0], r[1])} ${sign(r[2])} ${r[3]})`));
+  row(`R: ${feas(rows)}`, 'the feasible region: all the constraints at once, joined by && (≥ is typed >=)');
+  row(`${v} = Slider(0, ${p.zmax}, ${p.zstep})`, `a slider for the value of z (do not name it `, ['z'],
+    `: GeoGebra reads z as the third axis and draws a 3D plane)`);
+  row(`${lin(p.c[0], p.c[1])} = ${v}`, `the objective line: move the slider to ${p.sense === 'max' ? 'push it out' : 'pull it back'}`);
+  const cs = cornersOf(rows), L = 'ABCDEFGH';
+  cs.forEach((c, k) => {
+    const n = L[k], eq = B => `${lin(B.a, B.b)} = ${B.r}`;
+    const cmd = c.P.i >= 0 && c.Q.i >= 0 ? `${n} = Intersect(${eq(c.P)}, ${eq(c.Q)})` : `${n} = (${fmt(c.x)}, ${fmt(c.y)})`;
+    const zc = [[p.c[0], `x(${n})`], [p.c[1], `y(${n})`]].filter(t => t[0])
+      .map(([a, t]) => (a === 1 ? '' : a === -1 ? '-' : a + ' ') + t).join(' + ').replace('+ -', '- ');
+    row(cmd, `corner ${n}; its value of z: `, [zc]);
+  });
+  if (!cs.length) row('(none)', 'no corner: the constraints have no common point');
+  document.getElementById('sbAnsNote').textContent = (p.sense === 'max'
+    ? 'Maximize: push the objective line as far as it still touches the region.'
+    : 'Minimize: pull the objective line back as far as it still touches the region.')
+    + ' The last point touched is the optimum: compare the z values of the corners (two best corners: the whole edge'
+    + ' between them is optimal; a line that never leaves the region: unbounded; no region: infeasible).' + (p.answer ? '  ' + p.answer + '.' : '');
+}
+
 function sbPick() {
   const p = PB[sbSel.value];
   document.getElementById('sbpb').textContent = 'Plot this problem:  ' + p.label;
+  sbAnswer();
   document.getElementById('sbLoad').disabled = !p.load;
   document.getElementById('sbLoad').title = p.load ? '' : 'Only for the examples: plot this one yourself';
+  document.getElementById('sbPts').disabled = !p.rows;
+  document.getElementById('sbPts').title = p.rows ? 'Feasible integer points of the visible graph'
+    : 'Not for the team activity: plot this one yourself';
   sbView();
 }
 sbSel.addEventListener('change', sbPick);
@@ -520,16 +575,16 @@ document.getElementById('sbLoad').addEventListener('click', () => {
   sbRun(p.rows.map((r, i) => `c_${i + 1}: ${lin(r[0], r[1])} = ${r[3]}`)
     .concat([`R: ${feas(p.rows)}`, 'SetColor(R, "#0072CE")', 'SetFilling(R, 0.2)', 'ShowLabel(R, false)']));
 });
-// integer points of the visible view; for a problem with known constraints, only the feasible ones
-// (the team problems have no rows on purpose: there the button shows the whole integer grid)
+// feasible integer points of the visible view (off for the team problems: they have no `rows`)
 document.getElementById('sbPts').addEventListener('click', () => {
-  if (!sandbox) return;
-  const p = PB[sbSel.value], [, xmax, , ymax] = sbVisible();
+  const p = PB[sbSel.value];
+  if (!sandbox || !p.rows) return;
+  const [, xmax, , ymax] = sbVisible();
   const nx = Math.min(Math.floor(xmax), 80), ny = Math.min(Math.floor(ymax), 80);
   if (nx < 0 || ny < 0) return;
   const grid = `Join(Sequence(Sequence((i, j), i, 0, ${nx}), j, 0, ${ny}))`;
-  const keep = p.rows && p.rows.map(r => `${r[0]} x(q) + ${r[1]} y(q) ${r[2]} ${r[3]}`).join(' && ');
-  sbRun([`Pts = ${keep ? `KeepIf(${keep}, q, ${grid})` : grid}`, 'SetColor(Pts, "black")',
+  const keep = p.rows.map(r => `${r[0]} x(q) + ${r[1]} y(q) ${r[2]} ${r[3]}`).join(' && ');
+  sbRun([`Pts = KeepIf(${keep}, q, ${grid})`, 'SetColor(Pts, "black")',
          `SetPointSize(Pts, ${nx > 30 ? 2 : 3})`, 'ShowLabel(Pts, false)']);
 });
 document.getElementById('sbClear').addEventListener('click', () => sandbox && sbReset(sandbox));

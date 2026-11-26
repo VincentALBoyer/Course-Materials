@@ -524,7 +524,7 @@ function cornersOf(rows) {
   return out.sort((u, w) => u.x - w.x || u.y - w.y);
 }
 function sbAnswer() {
-  const p = PB[sbSel.value], rows = p.rows || p.cons, v = p.zname || 'zvalue', sign = s => s === '<=' ? '≤' : '≥';
+  const p = PB[sbSel.value], rows = p.rows || p.cons, v = p.zname || 'zvalue';
   const tbl = document.getElementById('sbAnsTable');
   document.getElementById('sbAns').open = false;             // a new problem: hide its answer again
   document.getElementById('sbAnsVars').textContent = (p.xy || 'x is x₁, y is x₂') + '. Type each command in the Input bar, then Enter.';
@@ -534,8 +534,6 @@ function sbAnswer() {
     c1.appendChild(Object.assign(document.createElement('code'), { textContent: cmd }));
     for (const w of what) c2.append(Array.isArray(w) ? Object.assign(document.createElement('code'), { textContent: w[0] }) : w);
   };
-  rows.forEach((r, i) => row(`${lin(r[0], r[1])} = ${r[3]}`,
-    `the boundary line of constraint ${i + 1} (${lin(r[0], r[1])} ${sign(r[2])} ${r[3]})`));
   row(`R: ${feas(rows)}`, 'the feasible region: all the constraints at once, joined by && (≥ is typed >=)');
   row(`${v} = Slider(0, ${p.zmax}, ${p.zstep})`, `a slider for the value of z (do not name it `, ['z'],
     `: GeoGebra reads z as the third axis and draws a 3D plane)`);

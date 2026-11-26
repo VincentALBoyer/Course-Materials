@@ -508,7 +508,6 @@ function injectSandbox() {
 }
 
 // ---- Sandbox "Answer (try it first)": the commands to type for the selected problem ----
-const fmt = v => String(+v.toFixed(4));
 // the corners of {rows, x >= 0, y >= 0}: intersections of two boundaries that satisfy every constraint
 function cornersOf(rows) {
   const bd = rows.map((r, i) => ({ a: r[0], b: r[1], r: r[3], i }))
@@ -544,7 +543,7 @@ function sbAnswer() {
   const cs = cornersOf(rows), L = 'ABCDEFGH';
   cs.forEach((c, k) => {
     const n = L[k], eq = B => `${lin(B.a, B.b)} = ${B.r}`;
-    const cmd = c.P.i >= 0 && c.Q.i >= 0 ? `${n} = Intersect(${eq(c.P)}, ${eq(c.Q)})` : `${n} = (${fmt(c.x)}, ${fmt(c.y)})`;
+    const cmd = `${n} = Intersect(${eq(c.P)}, ${eq(c.Q)})`;      // the axes are the lines x = 0 and y = 0
     const zc = [[p.c[0], `x(${n})`], [p.c[1], `y(${n})`]].filter(t => t[0])
       .map(([a, t]) => (a === 1 ? '' : a === -1 ? '-' : a + ' ') + t).join(' + ').replace('+ -', '- ');
     row(cmd, `corner ${n}; its value of z: `, [zc]);
